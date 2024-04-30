@@ -41,6 +41,7 @@ class OAuthLoginView(View):
             # 사용자의 정보를 세션에 저장
             # serializer로 직렬화 한다.
             request.session['member'] = MemberSerializer(member).data
+            print(request.session['member'])
             # 역참조를 통해 사용자 프로필을 가져온다.
             member_files = list(member.memberprofile_set.values('file_url'))
             # 사용자의 프로필 데이터가 존재하면 세션에 넣는다.

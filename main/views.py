@@ -173,8 +173,13 @@ class MainView(View):
                       member_name=F('member__member_name')) \
             .values('member_profile', 'member_name', 'id').first()
 
-        knowhow_file = KnowhowFile.objects.filter(knowhow_id=best_knowhow['id']).values('file_url').first()
-        best_knowhow['knowhow_file_url'] = knowhow_file['file_url'] if knowhow_file else None
+        # knowhow_file = KnowhowFile.objects.filter(knowhow_id=best_knowhow['id']).values('file_url').first()
+        # best_knowhow['knowhow_file_url'] = knowhow_file['file_url'] if knowhow_file else None
+
+        if best_knowhow is not None:
+            knowhow_file = KnowhowFile.objects.filter(knowhow_id=best_knowhow['id']).values('file_url').first()
+            best_knowhow['knowhow_file_url'] = knowhow_file['file_url'] if knowhow_file else None
+        else: render(request, 'main/main.html')
 
         # 메인에 표시된 노하우 게시물
         knowhows = Knowhow.objects.filter().order_by('knowhow_count') \
