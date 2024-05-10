@@ -100,7 +100,7 @@ class LectureMainView(View):
         )
 
         # for lecture in lectures_with_same_address:
-            # print(lecture)
+        # print(lecture)
 
         # 필터링된 강의 목록에 대한 추가 정보 가져오기
         for lecture in lectures_with_same_address:
@@ -168,7 +168,8 @@ class LectureMainApi(APIView):
 
             # 강의 스크랩 정보 가져오기
             lecture_scrap = LectureScrap.objects.filter(lecture_id=lecture['id'],
-                                                        member_id=request.session['member']['id']).values('status').first()
+                                                        member_id=request.session['member']['id']).values(
+                'status').first()
             lecture['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
 
             # 강의 관련 식물 정보 가져오기
@@ -179,10 +180,8 @@ class LectureMainApi(APIView):
         return Response(lectures[offset:limit])
 
 
-
 class LectureTotalView(View):
     def get(self, request):
-
         lecture_count = Lecture.objects.count()
 
         context = {'lecture_count': lecture_count}
@@ -217,7 +216,6 @@ class LectureTotalApi(APIView):
             condition2 |= Q(lecturecategory__category_name__contains='기타')
         elif type == '전체':
             condition2 |= Q()
-
 
         filters = filters.split(',')
         for filter in filters:
@@ -263,14 +261,17 @@ class LectureTotalApi(APIView):
             .annotate(member_name=F('teacher__member__member_name')) \
             .values(*columns) \
             .annotate(scrap_count=Count(Q(lecturescrap__status=1))) \
-            .values('id', 'lecture_title', 'lecture_price', 'teacher__member__member_name', 'teacher__member_id', 'scrap_count', 'online_status')\
+            .values('id', 'lecture_title', 'lecture_price', 'teacher__member__member_name', 'teacher__member_id',
+                    'scrap_count', 'online_status') \
             .order_by(sort1, sort2).distinct()
 
-        lectures_count = Lecture.objects.select_related('lecturescrap').filter(condition, condition2, lecture_status=False)  \
+        lectures_count = Lecture.objects.select_related('lecturescrap').filter(condition, condition2,
+                                                                               lecture_status=False) \
             .annotate(member_name=F('teacher__member__member_name')) \
-            .values(*columns)  \
-            .annotate(scrap_count=Count(Q(lecturescrap__status=1)))  \
-            .values('id', 'lecture_title', 'lecture_price', 'teacher__member__member_name', 'teacher__member_id', 'scrap_count', 'online_status') \
+            .values(*columns) \
+            .annotate(scrap_count=Count(Q(lecturescrap__status=1))) \
+            .values('id', 'lecture_title', 'lecture_price', 'teacher__member__member_name', 'teacher__member_id',
+                    'scrap_count', 'online_status') \
             .order_by(sort1, sort2).distinct().count()
 
         # print(lectures_count)
@@ -285,14 +286,14 @@ class LectureTotalApi(APIView):
             lecture['lecture_file'] = lecture_file['file_url'] if lecture_file else None
             lecture['profile'] = profile['file_url'] if profile else None
 
-            lecture_scrap = LectureScrap.objects.filter(lecture_id=lecture['id'], member_id=member['id']).values('status').first()
+            lecture_scrap = LectureScrap.objects.filter(lecture_id=lecture['id'], member_id=member['id']).values(
+                'status').first()
             lecture['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
 
             product_plants = LecturePlant.objects.filter(lecture_id=lecture['id']).values('plant_name')
             product_list = [item['plant_name'] for item in product_plants]
             lecture['plant_name'] = product_list
             # print(lecture)
-
 
         # # 강의 목록 가져오기 (마감되지 않은 강의)
         # lectures = Lecture.objects.filter(lecture_status=False).annotate(
@@ -429,17 +430,21 @@ class LectureDetailOnlineView(View):
 
 class LectureDetailOfflineView(View):
     def get(self, request):
-        member = request.session['member']
+        member = request.session.get('member')
         lecture_id = request.GET.get('id')
         # print(member, lecture_id)
+
         lecture = Lecture.objects.filter(id=request.GET['id'], online_status=False) \
             .values('id', 'lecture_title', 'lecture_content', 'lecture_price', 'lecture_headcount', 'online_status',
                     'teacher_id', 'teacher__member__member_name', 'lecture_category__lecture_category_name',
                     'teacher__member__member_email', 'teacher__member_id').first()
         # print(lecture)
-        lecture_scrap = LectureScrap.objects.filter(lecture_id=lecture['id'],
-                                                    member_id=member['id']).values('status').first()
-        lecture['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
+        if member is None:
+            lecture['lecture_scrap'] = False
+        else:
+            lecture_scrap = LectureScrap.objects.filter(lecture_id=lecture['id'],
+                                                        member_id=member['id']).values('status').first()
+            lecture['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
 
         # 올린 강의 게시물을 작성한 사용자 찾기
         teacher_id = lecture['teacher_id']
@@ -449,9 +454,12 @@ class LectureDetailOfflineView(View):
                     'teacher__member_id')
 
         for lte in lectures:
-            lecture_scrap = LectureScrap.objects.filter(lecture_id=lte['id'],
-                                                        member_id=member['id']).values('status').first()
-            lte['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
+            if member is None:
+                lte['lecture_scrap'] = False
+            else:
+                lecture_scrap = LectureScrap.objects.filter(lecture_id=lte['id'],
+                                                            member_id=member['id']).values('status').first()
+                lte['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
             product_img = LectureProductFile.objects.filter(lecture_id=lte['id']).values('file_url').first()
 
             if product_img:
@@ -526,7 +534,6 @@ class LectureDetailOfflineView(View):
         member = request.session['member']
         member = Member.objects.get(id=member['id'])
 
-
         data = {
             'date': apply_data['date-input'],
             'time': apply_data['time-input'],
@@ -564,7 +571,7 @@ class LectureDetailCartAPI(APIView):
 
         apply = Apply.objects.create(**data)
 
-        cart = Cart.objects.filter(member_id = member, cart_status=0).values('id').first()
+        cart = Cart.objects.filter(member_id=member, cart_status=0).values('id').first()
 
         cart_data = {
             'apply_id': apply.id,
@@ -928,6 +935,7 @@ class LectureDeleteView(View):
         Lecture.objects.filter(id=request.GET['id']).update(lecture_status=True)
 
         return redirect('/lecture/total')
+
 
 class LectureReportView(View):
     @transaction.atomic

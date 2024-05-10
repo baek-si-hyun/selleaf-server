@@ -109,10 +109,12 @@ const recommendScrapButton = document.querySelectorAll(
   ".realmain-plantRecommend-scrapbutton"
 );
 
-const transSrcapBtnFn = (scrapBtn, respones) => {
-  if (respones) {
+const transSrcapBtnFn = (scrapBtn, responses) => {
+console.log(responses)
+  if (responses) {
     const img = scrapBtn.querySelector(".scrap-img");
-    if (respones.status) {
+        console.log(img.getAttribute('src'))
+    if (responses.status) {
       img.setAttribute("src", "/static/public/web/images/common/scrap-on.png");
       if (animationTarget) {
         animationTarget.classList.remove("show-animation");
@@ -135,6 +137,8 @@ const transSrcapBtnFn = (scrapBtn, respones) => {
         animationTarget.classList.add("hide-animation");
       }, 3000);
     }
+  } else{
+    location.href='/member/login/'
   }
 }
 
@@ -145,40 +149,40 @@ let animationTarget;
 realmainPlantRecommendPhotoul.addEventListener('click', async (e) => {
   const scrapBtn = e.target.closest('.scrap-button')
   const knowhowContentId = scrapBtn.closest('.realmain-plantRecommend-photoli').classList[1]
-  const respones = await knowhowScrapService.update(knowhowContentId)
-  transSrcapBtnFn(scrapBtn, respones)
+  const responses = await knowhowScrapService.update(knowhowContentId)
+  transSrcapBtnFn(scrapBtn, responses)
 })
 
 const realmainLecturePhotoWrap = document.querySelector('.realmain-lecture-photoWrap')
 realmainLecturePhotoWrap.addEventListener('click', async (e) => {
   const scrapBtn = e.target.closest('.scrap-button')
   const lectureContentId = scrapBtn.closest('.realmain-lecture-photoEachdiv').classList[1]
-  const respones = await lectureScrapService.update(lectureContentId)
-  transSrcapBtnFn(scrapBtn, respones)
+  const responses = await lectureScrapService.update(lectureContentId)
+  transSrcapBtnFn(scrapBtn, responses)
 })
 
 const realmainBestproductRealphotoWrap = document.querySelector('.realmain-bestproduct-realphotoWrap')
 realmainBestproductRealphotoWrap.addEventListener('click', async (e) => {
   const scrapBtn = e.target.closest('.scrap-button')
   const lectureContentId = scrapBtn.closest('.realmain-bestproduct-realphotoContent').classList[1]
-  const respones = await lectureScrapService.update(lectureContentId)
-  transSrcapBtnFn(scrapBtn, respones)
+  const responses = await lectureScrapService.update(lectureContentId)
+  transSrcapBtnFn(scrapBtn, responses)
 })
 
 const realmainTodayHotdealPhotoWrapUl = document.querySelector('.realmain-todayHotdeal-photoWrapUl')
 realmainTodayHotdealPhotoWrapUl.addEventListener('click', async (e) => {
   const scrapBtn = e.target.closest('.scrap-button')
   const tradeContentId = scrapBtn.closest('.realmain-todayHotdeal-photoWrapli').classList[1]
-  const respones = await tradeScrapService.update(tradeContentId)
-  transSrcapBtnFn(scrapBtn, respones)
+  const responses = await tradeScrapService.update(tradeContentId)
+  transSrcapBtnFn(scrapBtn, responses)
 })
 
 const popularcontentPhotoDiv = document.querySelector('.popularcontent-photoDiv')
 popularcontentPhotoDiv.addEventListener('click', async (e) => {
   const scrapBtn = e.target.closest('.scrap-button')
   const postContentId = scrapBtn.closest('.popularcontent-photoEachdiv').classList[2]
-  const respones = await postScrapService.update(postContentId)
-  transSrcapBtnFn(scrapBtn, respones)
+  const responses = await postScrapService.update(postContentId)
+  transSrcapBtnFn(scrapBtn, responses)
 })
 
 const realmainBestproductPhotoCategoryUl = document.querySelector('.realmain-bestproduct-photoCategoryUl')
@@ -197,7 +201,7 @@ const createBestLecture = (bestLectures) => {
     bestLectureHTML += `
   <div class="realmain-bestproduct-realphotoContent ${bestLecture.id}">
     <article class="realmain-bestproduct-realphotoArticle">
-      <a class="realmain-bestproduct-realphotoA"></a>
+      <a class="realmain-bestproduct-realphotoA" href="lecture/detail/offline/?id=${bestLecture.id}"></a>
       <div class="realmain-bestproduct-realphotoDiv">
         <img
             class="realmain-bestproduct-realphotoimg"

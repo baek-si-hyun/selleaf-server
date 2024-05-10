@@ -69,8 +69,11 @@ class PostCreateView(View):
 class PostDetailView(View):
     def get(self, request):
         post = Post.objects.get(id=request.GET['id'])
-        session_member_id = request.session['member']['id']
-        session_profile = MemberProfile.objects.get(id=session_member_id)
+        session_member_id = request.session.get('member')
+        session_profile = None
+        if session_member_id:
+            session_member_id = session_member_id.get('id')
+            session_profile = MemberProfile.objects.get(id=session_member_id)
         post_tags = PostTag.objects.filter(post_id__gte=1).values('tag_name')
         reply_count = PostReply.objects.filter(post_id=post.id).values('id').count()
         member_profile = MemberProfile.objects.get(id=post.member_id)

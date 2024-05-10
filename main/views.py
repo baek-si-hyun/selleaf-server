@@ -168,16 +168,16 @@ class MainView(View):
         # created_date__range = (start_of_week, end_of_week)
 
         # 메인 최상단에 표시될 노하우 게시물
-        best_knowhow = Knowhow.objects.filter().order_by('knowhow_count') \
+        best_knowhow = Knowhow.objects.filter().order_by('-knowhow_count') \
             .annotate(member_profile=F('member__memberprofile__file_url'),
                       member_name=F('member__member_name')) \
             .values('member_profile', 'member_name', 'id').first()
 
         knowhow_file = KnowhowFile.objects.filter(knowhow_id=best_knowhow['id']).values('file_url').first()
         best_knowhow['knowhow_file_url'] = knowhow_file['file_url'] if knowhow_file else None
-
+        print(best_knowhow)
         # 메인에 표시된 노하우 게시물
-        knowhows = Knowhow.objects.filter().order_by('knowhow_count') \
+        knowhows = Knowhow.objects.filter() \
                        .annotate(member_profile=F('member__memberprofile__file_url'),
                                  member_name=F('member__member_name')) \
                        .values('member_profile', 'member_name', 'id', 'knowhow_title')[:10]
@@ -190,7 +190,8 @@ class MainView(View):
             else:
                 knowhow_scrap = KnowhowScrap.objects.filter(knowhow_id=knowhow['id'], member_id=member['id']).values(
                     'status').first()
-                knowhow['knowhow_scrap'] = knowhow_scrap['status'] if knowhow_scrap and 'status' in knowhow_scrap else False
+                knowhow['knowhow_scrap'] = knowhow_scrap[
+                    'status'] if knowhow_scrap and 'status' in knowhow_scrap else False
 
         # 데이터가 너무 적어 기획 변경
         # start_of_day = datetime(today.year, today.month, today.day, 0, 0, 0)
@@ -276,7 +277,7 @@ class BestLectureCategoryAPI(APIView):
                                       lecture_rating=Round(Sum('lecturereview__review_rating') / Count('lecturereview'),
                                                            1)) \
                             .order_by('-id') \
-                            .values('id', 'lecture_title', 'lecture_content', 'lecturescrap__status', 'review_count',
+                            .values('id', 'lecture_title', 'lecture_content', 'review_count',
                                     'lecture_rating', 'lecture_price')[:3]
 
         for best_lecture in best_lectures:
@@ -292,9 +293,10 @@ class BestLectureCategoryAPI(APIView):
                     'status').first()
                 best_lecture['lecture_scrap'] = lecture_scrap[
                     'status'] if lecture_scrap and 'status' in lecture_scrap else False
+                best_lecture['member_id'] = member['id']
             if best_lecture['lecture_rating'] is None:
                 best_lecture['lecture_rating'] = 0
-
+            print(best_lecture)
         return Response(best_lectures)
 
 
@@ -302,14 +304,12 @@ class KnowhowScrapAPI(APIView):
     def patch(self, request):
         data = request.data
         member = request.session.get('member')
-
+        print(data)
         if member:
-
             data = {
                 'knowhow_id': data['knowhow_id'],
                 'member_id': member['id']
             }
-
             knowhow_scrap, created = KnowhowScrap.objects.get_or_create(knowhow_id=data['knowhow_id'],
                                                                         member_id=data['member_id'])
             if not created:

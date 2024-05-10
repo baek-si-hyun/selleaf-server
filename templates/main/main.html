@@ -15,10 +15,12 @@
         <div class="realmain-wrap-container">
           <div class="realmain-image-wrap">
             <section class="realmain-image-section">
-              <a class="realmain-image-firsta" href="/knowhow/detail/?id={{ knowhow.id }}">
+              <a class="realmain-image-firsta" href="/knowhow/detail/?id={{ best_knowhow.id }}">
                 <img
                     class="realmain-image"
                     src="/upload/{{ best_knowhow.knowhow_file_url }}"
+                    loading="lazy"
+                    decoding="async"
                 />
                 <div class="realmain-image-content">
                   <p class="realmain-image-contentp">최고의 작품😊</p>
@@ -27,11 +29,15 @@
                       <img
                           class="realmain-image-contentspan-image"
                           src="{{ best_knowhow.member_profile }}"
+                          loading="lazy"
+                          decoding="async"
                       />
                     {% else %}
                       <img
                           class="realmain-image-contentspan-image"
                           src="/upload/{{ best_knowhow.member_profile }}"
+                          loading="lazy"
+                          decoding="async"
                       />
                     {% endif %}
                     <span class="realmain-image-contentspan-span"
@@ -59,7 +65,7 @@
               </div>
             </div>
             <div class="realmain-seeMore-wrap">
-              <a  class="realmain-seeMore" href="/knowhow/list/">더보기</a>
+              <a class="realmain-seeMore" href="/knowhow/list/">더보기</a>
             </div>
           </div>
           <div class="realmain-plantRecommend-photowrap">
@@ -73,6 +79,8 @@
                           <img
                               src="/upload/{{ knowhow.knowhow_file_url }}"
                               class="realmain-plantRecommend-photo"
+                              loading="lazy"
+                              decoding="async"
                           />
                           <div class="realmain-plantRecommend-profilediv">
                             <div class="realmain-plantRecommend-profilediv2">
@@ -81,11 +89,15 @@
                                   <img
                                       src="{{ knowhow.member_profile }}"
                                       class="realmain-plantRecommend-profile"
+                                      loading="lazy"
+                                      decoding="async"
                                   />
                                 {% else %}
                                   <img
                                       src="/upload/{{ knowhow.member_profile }}"
                                       class="realmain-plantRecommend-profile"
+                                      loading="lazy"
+                                      decoding="async"
                                   />
                                 {% endif %}
                               </div>
@@ -102,10 +114,13 @@
                             >
                               <span class="realmain-plantRecommend-scrapspan">
                                 <img
-                                    src="{% if knowhow.knowhow_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
+                                    src="
+                                        {% if knowhow.knowhow_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
                                     width="24"
                                     height="24"
                                     class="scrap-img"
+                                    loading="lazy"
+                                    decoding="async"
                                 />
                               </span>
                             </button>
@@ -175,6 +190,8 @@
                     <img
                         src="/upload/{{ lecture.lecture_file_url }}"
                         class="realmain-lecture-photo"
+                        loading="lazy"
+                        decoding="async"
                     />
                     <div class="realmain-lecture-why">
                       <div class="realmain-lecture-whydiv"></div>
@@ -187,10 +204,13 @@
                       >
                         <span class="realmain-lecture-scrapSpan">
                           <img
-                              src="{% if lecture.lecture_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
+                              src="
+                                  {% if lecture.lecture_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
                               width="24"
                               height="24"
                               class="scrap-img"
+                              loading="lazy"
+                              decoding="async"
                           />
                         </span>
                       </button>
@@ -245,6 +265,8 @@
                       <img
                           src="/upload/{{ post.post_file_url }}"
                           class="realmain-lecture-photo popularcontent-photo"
+                          loading="lazy"
+                          decoding="async"
                       />
                       <div class="realmain-lecture-why popularcontent-why">
                         <div
@@ -261,10 +283,13 @@
                             class="realmain-lecture-scrapSpan popularcontent-scrapSpan"
                         >
                           <img
-                              src="{% if post.post_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
+                              src="
+                                  {% if post.post_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
                               width="24"
                               height="24"
                               class="scrap-img popularcontent-scrapoff"
+                              loading="lazy"
+                              decoding="async"
                           />
                         </span>
                         </button>
@@ -327,6 +352,8 @@
                                     class="realmain-todayHotdeal-img"
                                     width="269"
                                     height="269"
+                                    loading="lazy"
+                                    decoding="async"
                                 />
                                 <button
                                     type="button"
@@ -334,10 +361,13 @@
                                     style="top: 3px; right:8px"
                                 >
                                   <img
-                                      src="{% if trade.trade_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
+                                      src="
+                                          {% if trade.trade_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
                                       class="scrap-img"
                                       width="24"
                                       height="24"
+                                      loading="lazy"
+                                      decoding="async"
                                   />
                                 </button>
                                 <div
@@ -444,6 +474,8 @@
                     <img
                         src="/upload/{{ lectureReview.lecture_file_url }}"
                         class="realmain-userReview-img"
+                        loading="lazy"
+                        decoding="async"
                     />
                     <div class="realmain-userReview-whyDiv">
                       <div class="realmain-userReview-whyDivD"></div>
