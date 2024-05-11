@@ -110,10 +110,10 @@ const recommendScrapButton = document.querySelectorAll(
 );
 
 const transSrcapBtnFn = (scrapBtn, responses) => {
-console.log(responses)
+  console.log(responses)
   if (responses) {
     const img = scrapBtn.querySelector(".scrap-img");
-        console.log(img.getAttribute('src'))
+    console.log(img.getAttribute('src'))
     if (responses.status) {
       img.setAttribute("src", "/static/public/web/images/common/scrap-on.png");
       if (animationTarget) {
@@ -137,8 +137,8 @@ console.log(responses)
         animationTarget.classList.add("hide-animation");
       }, 3000);
     }
-  } else{
-    location.href='/member/login/'
+  } else {
+    location.href = '/member/login/'
   }
 }
 
