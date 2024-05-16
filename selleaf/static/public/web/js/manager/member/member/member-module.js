@@ -3,7 +3,7 @@ const memberService = (() => {
     // 회원 목록 조회 - 한 번에 10명씩
     const getList = async (keyword, page, callback) => {
         // API에 데이터 요청
-        const response = await fetch (`/admin/member-list/?keyword=${keyword}&page=${page}`);
+        const response = await fetch (`/service-admin/member-list/?keyword=${keyword}&page=${page}`);
         const members = await response.json();
 
         // 콜백함수를 인자로 받았다면 콜백함수에 처리를 넘김
@@ -17,7 +17,7 @@ const memberService = (() => {
 
     // 회원 여러 명을 휴면 상태로 변경
     const deleteMembers = async (memberIds) => {
-        await fetch(`/admin/member/delete/${memberIds}`, {
+        await fetch(`/service-admin/member/delete/${memberIds}`, {
             method: 'PATCH',
             headers: {'X-CSRFToken': csrf_token}
         });

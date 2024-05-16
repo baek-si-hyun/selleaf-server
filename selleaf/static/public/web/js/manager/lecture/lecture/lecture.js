@@ -150,7 +150,7 @@ const createHTML = (() => {
                 text += `
                   <li class="list-content ${lecture.id}">
                     <input type="checkbox" class="checkbox-input" />
-                    <a class="class-info-wrap" href="/admin/lecture/review/?id=${lecture.id}" target="_blank">
+                    <a class="class-info-wrap" href="/service-admin/lecture/review/?id=${lecture.id}" target="_blank">
                       <div class="class-info title">
                           <p class="content-name">${lecture.lecture_title}</p>
                           <p class="content-name-detail">${lecture.lecture_content}</p>

@@ -3,7 +3,7 @@ const teacherService = (() => {
     // 강사 목록 조회 - 한 번에 10명씩
     const getList = async (keyword, page, callback) => {
         // API에 데이터 요청
-        const response = await fetch (`/admin/teacher-list/?keyword=${keyword}&page=${page}`);
+        const response = await fetch (`/service-admin/teacher-list/?keyword=${keyword}&page=${page}`);
         const teachers = await response.json();
 
         // 콜백함수를 인자로 받았다면 콜백함수에 처리를 넘김
@@ -18,7 +18,7 @@ const teacherService = (() => {
     // 강사 신청자 목록 조회 - 한 번에 10명씩
     const getEntryList = async (keyword, page, callback) => {
         // API에 데이터 요청
-        const response = await fetch (`/admin/teacher-entry-list/?keyword=${keyword}&page=${page}`);
+        const response = await fetch (`/service-admin/teacher-entry-list/?keyword=${keyword}&page=${page}`);
         const teacherEntries = await response.json();
 
         // 콜백함수를 인자로 받았다면 콜백함수에 처리를 넘김
@@ -32,7 +32,7 @@ const teacherService = (() => {
 
     // 강사 여러 명 승인
     const approveTeachers = async (teacherIds) => {
-        await fetch(`/admin/teacher-approve/${teacherIds}`, {
+        await fetch(`/service-admin/teacher-approve/${teacherIds}`, {
             method: 'PATCH',
             headers: {'X-CSRFToken': csrf_token}
         });
@@ -40,7 +40,7 @@ const teacherService = (() => {
 
     // 강사 여러 명 차단
     const deleteTeachers = async (teacherIds) => {
-        await fetch(`/admin/teacher-delete/${teacherIds}`, {
+        await fetch(`/service-admin/teacher-delete/${teacherIds}`, {
             method: 'PATCH',
             headers: {'X-CSRFToken': csrf_token}
         });

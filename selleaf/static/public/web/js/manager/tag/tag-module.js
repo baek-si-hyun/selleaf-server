@@ -1,6 +1,6 @@
 const manageTag = (() => {
    const getTags = async (keyword, page, callback) => {
-       const response = await fetch(`/admin/tags/api/?keyword=${keyword}&page=${page}`)
+       const response = await fetch(`/service-admin/tags/api/?keyword=${keyword}&page=${page}`)
        const tags = await response.json()
 
        if(callback){
@@ -10,7 +10,7 @@ const manageTag = (() => {
    }
 
    const remove = async (tagList) => {
-       await fetch(`/admin/tags/api/`, {
+       await fetch(`/service-admin/tags/api/`, {
            method: 'DELETE',
            headers: {
                'Content-Type': 'application/json;charset=utf-8',

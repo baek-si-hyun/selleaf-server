@@ -9,12 +9,12 @@
     <div class="next">
       <div class="full-screen">
         {% include 'manager/fix/manager-header.html' %}
-        <form action="/admin/qna/update/?id={{ qna.id }}" method="post" name="qna-update-form">
+        <form action="/service-admin/qna/update/?id={{ qna.id }}" method="post" name="qna-update-form">
           {% csrf_token %}
           <div class="compose-wrap">
             <div class="compose-container">
               <div class="compose-inner-left">
-                <a class="compose-inner-left" href="/admin/qna/">
+                <a class="compose-inner-left" href="/service-admin/qna/">
                   <svg
                     class="compose-inner-left"
                     viewBox="0 0 17 16"
