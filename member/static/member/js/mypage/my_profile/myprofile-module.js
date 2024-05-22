@@ -34,7 +34,6 @@ const postService = (()=>{
     };
 
         const getReviews = async (page, callback)=>{
-        console.log('댓글 가져오기')
         const response = await fetch(`/member/mypage/show/reviews/${page}`);
         const reviews = await response.json();
         if (callback){

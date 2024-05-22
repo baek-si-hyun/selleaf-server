@@ -32,7 +32,7 @@ reviewsItems.forEach((item) => {
 });
 
 
-let page = 1
+
 
 const showList = (posts) => {
   let text = ``
@@ -125,28 +125,11 @@ const showList = (posts) => {
   return text;
 };
 
-
+let page = 1
 const wrap = document.querySelector('.post-wrap');
 postService.getList(page++, showList).then((text)=>{
   wrap.innerHTML += text;
 });
-
-window.addEventListener("scroll", () => {
-    // 맨위
-    const scrollTop = document.documentElement.scrollTop;
-    // 페이지 높이
-    const windowHeight = window.innerHeight;
-    // 암튼 높이
-    const totalHeight = document.documentElement.scrollHeight;
-    // 전체 높이에서 내가 보는 스크롤이 total보다 크면 추가
-
-    if (scrollTop + windowHeight >= totalHeight) {
-postService.getList(page++, showList).then((text)=>{
-  wrap.innerHTML += text;
-});
-    }
-});
-
 
 
 const showReviewList = (reviews) => {
@@ -157,58 +140,58 @@ const showReviewList = (reviews) => {
     let lecturePlantTags = ""; // postPlantTags 변수를 미리 정의하고 초기화
 
       lecturePlantTags = review.lecture_plant.map(plant => `
-                  <li class="item-tags">
-                    <div>
-                      <button
-                        class="item-tags-button"
-                        type="button"
-                      >
-                        ${plant}
-                      </button>
-                    </div>
-                  </li>`).join('');
+          <li class="item-tags">
+            <div>
+              <button
+                class="item-tags-button"
+                type="button"
+              >
+                ${plant}
+              </button>
+            </div>
+          </li>`).join('');
 
       text += `
          <div class="reviews-history-item-wrap">
-                  <a href="/lecture/detail/${review.lecture_status}/?id=${review.lecture_id}" class="reviews-history-link"></a>
-                  <div class="reviews-history-item-container">
-                    <div class="reviews-item-image-wrap" style="opacity: 1">
-                      <img alt=""
-                        class="reviews-item-image"
-                        src="/upload/${review.lecture_file}"
-                      />
-                    </div>
-                    <div class="reviews-item-title-wrap" style="opacity: 1">
-                      <span>${review.review_title}</span>
-                    </div>
-                    <div class="reviews-item-article-wrap" style="opacity: 1">
-                      <span>${review.review_content}</span>
-                    </div>
-                    <!-- 작성자, 조회수, 지역, 태그까지 모두 감싸는 부분 -->
-                    <div class="reviews-item-info-wrap">
-                      <div class="article-info-wrap">
-                        <!-- 작성자 -->
-                        <div class="user-info-wrap">
-                          ${review.lecture_title}
-                        </div>
-                        <!-- 올린 시간, 조회수, 지역 -->
-                        <div class="item-info-wrap">
-                          <div class="item-infos">${timeForToday(review.updated_date)}</div>
-                          <div class="item-infos">별점 ${review.review_rating}</div>
-                          <div class="item-infos">${review.lecture_category}</div>
-                        </div>
-                      </div>
-                      <!-- 태그 -->
-                      <div class="item-tags-wrap">
-                        <ul class="item-tags-container">
-                          ${lecturePlantTags} <!-- postPlantTags 변수를 여기서 사용 -->
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
+          <a href="/lecture/detail/${review.lecture_status}/?id=${review.lecture_id}" class="reviews-history-link"></a>
+          <div class="reviews-history-item-container">
+            <div class="reviews-item-image-wrap" style="opacity: 1">
+              <img alt=""
+                class="reviews-item-image"
+                src="/upload/${review.lecture_file}"
+              />
+            </div>
+            <div class="reviews-item-title-wrap" style="opacity: 1">
+              <span>${review.review_title}</span>
+            </div>
+            <div class="reviews-item-article-wrap" style="opacity: 1">
+              <span>${review.review_content}</span>
+            </div>
+            <!-- 작성자, 조회수, 지역, 태그까지 모두 감싸는 부분 -->
+            <div class="reviews-item-info-wrap">
+              <div class="article-info-wrap">
+                <!-- 작성자 -->
+                <div class="user-info-wrap">
+                  ${review.lecture_title}
                 </div>
-                <!-- 각 내역 사이의 구분선 -->
-                <hr class="items-seperator" />
+                <!-- 올린 시간, 조회수, 지역 -->
+                <div class="item-info-wrap">
+                  <div class="item-infos">${timeForToday(review.updated_date)}</div>
+                  <div class="item-infos">별점 ${review.review_rating}</div>
+                  <div class="item-infos">${review.lecture_category}</div>
+                </div>
+              </div>
+              <!-- 태그 -->
+              <div class="item-tags-wrap">
+                <ul class="item-tags-container">
+                  ${lecturePlantTags} <!-- postPlantTags 변수를 여기서 사용 -->
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 각 내역 사이의 구분선 -->
+        <hr class="items-seperator" />
       `;
 
   });
@@ -216,11 +199,10 @@ const showReviewList = (reviews) => {
   return text;
 };
 
-
-const target = document.querySelector('.here');
-postService.getReviews(page++, showReviewList).then((text)=>{
-  target.innerHTML += text;
-});
+const target = document.querySelector('.here')
+postService.getReviews(page,showReviewList).then((text)=>{
+  target.innerHTML += text
+})
 
 function timeForToday(datetime) {
     const today = new Date();
@@ -258,23 +240,5 @@ function timeForToday(datetime) {
 
     return `${gap}년 전`;
 }
-
-
-
-window.addEventListener("scroll", () => {
-    // 맨위
-    const scrollTop = document.documentElement.scrollTop;
-    // 페이지 높이
-    const windowHeight = window.innerHeight;
-    // 암튼 높이
-    const totalHeight = document.documentElement.scrollHeight;
-    // 전체 높이에서 내가 보는 스크롤이 total보다 크면 추가
-
-    if (scrollTop + windowHeight >= totalHeight) {
-        postService.getReviews(page++, showReviewList).then((text)=>{
-          target.innerHTML += text;
-        });
-    }
-});
 
 

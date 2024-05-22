@@ -350,12 +350,13 @@
 .comment-input-wrap {
   margin-bottom: 40px;
   margin-top: 8px;
+  display: flex;
+  flex-direction: column;
 }
 .comment-input-container {
   position: relative;
   display: flex;
-  -webkit-box-align: center;
-  align-items: center;
+  align-items: start;
 }
 .comment-user-icon-box {
   display: inline-block;
@@ -372,7 +373,7 @@
   width: 35px;
   height: 35px;
   display: block;
-
+  border: 0.5px solid rgba(0, 0, 0, 0.2);
 }
 .input-wrap {
   -webkit-box-flex: 1;
@@ -504,7 +505,6 @@
   height: 30px;
   display: block;
   border-radius: 50%;
-
 }
 .comment-content-box {
   flex: 1 1 0%;

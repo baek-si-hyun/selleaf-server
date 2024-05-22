@@ -17,6 +17,7 @@ class Member(Period):
     sms_agree = models.BooleanField(default=False)
     # True: 관리자, False: 일반 회원
     admin_type = models.BooleanField(default=False)
+    member_knowhow_ai_model = models.TextField(blank=False, default='base')
 
     class Meta:
         db_table = 'tbl_member'
@@ -37,3 +38,13 @@ class MemberProfile(File):
     class Meta:
         db_table = 'tbl_member_profile'
         ordering = ['-id']
+
+
+class MemberAiFile(Period):
+    file_name = models.CharField(max_length=255, null=False, blank=False)
+    file_path = models.CharField(max_length=255, null=False, blank=False)
+    category = models.CharField(max_length=255, null=False, blank=False)
+    member = models.ForeignKey(Member, on_delete=models.PROTECT, null=False)
+
+    class Meta:
+        db_table = 'tbl_ai_file'

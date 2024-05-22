@@ -8,11 +8,11 @@ const commentSubmitBtn = document.querySelector(".comment-submit-btn");
 commentInput.addEventListener("focus", () => {
   inputContainer.style.border = "1px solid #c06888";
   console.log(commentInput.value)
-  if (commentInput.value){
+  if (commentInput.value) {
     commentSubmitBtn.disabled = false;
     commentSubmitBtn.style.cursor = 'pointer';
     commentSubmitBtn.style.color = "#c06888"
-  }else {
+  } else {
     commentSubmitBtn.disabled = true;
     commentSubmitBtn.style.cursor = 'default';
     commentSubmitBtn.style.color = "rgb(194, 200, 204)";
@@ -26,13 +26,12 @@ commentInput.addEventListener("focusout", () => {
 
 
 commentInput.addEventListener("keyup", () => {
-  console.log(commentInput.value)
 
-  if(commentInput.value){
+  if (commentInput.value) {
     commentSubmitBtn.disabled = false;
     commentSubmitBtn.style.cursor = 'pointer';
     commentSubmitBtn.style.color = "#c06888"
-  }else {
+  } else {
     commentSubmitBtn.disabled = true;
     commentSubmitBtn.style.cursor = 'default';
     commentSubmitBtn.style.color = "rgb(194, 200, 204)";
@@ -93,10 +92,16 @@ commentInput.addEventListener("focusout", () => {
 });
 
 // const commentSubmitBtn = document.querySelector(".comment-submit-btn");
-commentInput.addEventListener("keyup", () => {
-  commentInput.value
-    ? (commentSubmitBtn.style.color = "#c06888")
-    : (commentSubmitBtn.style.color = "rgb(194, 200, 204)");
+const profanityWarning = document.querySelector('.profanity-warning')
+commentInput.addEventListener("keyup", (e) => {
+  if (commentInput.value) {
+    commentSubmitBtn.style.color = "#c06888"
+    profanityWarning.style.display = "none"
+    // inputContainer.style.border = "1px solid rgb(218, 221, 224);"
+  } else {
+    commentSubmitBtn.style.color = "rgb(194, 200, 204)"
+  }
+
 });
 
 const stickyBtns = document.querySelectorAll(".sticky-btn");
@@ -114,13 +119,13 @@ stickyBtns.forEach((item) => {
       const imgSrc = img.getAttribute("src");
       imgSrc === "/static/public/web/images/common/scrap-off-blk.png"
         ? img.setAttribute(
-            "src",
-            "/static/public/web/images/common/scrap-on-pink.png"
-          )
+          "src",
+          "/static/public/web/images/common/scrap-on-pink.png"
+        )
         : img.setAttribute(
-            "src",
-            "/static/public/web/images/common/scrap-off-blk.png"
-          );
+          "src",
+          "/static/public/web/images/common/scrap-off-blk.png"
+        );
     }
   });
 });
@@ -160,8 +165,8 @@ declarationLabels.forEach((item, i) => {
 
       declarationItems[j].classList.remove("report-choice")
       if (radio.checked) {
-          radio.parentNode.classList.add("declaration-choice");
-          declarationItems[j].classList.add("report-choice")
+        radio.parentNode.classList.add("declaration-choice");
+        declarationItems[j].classList.add("report-choice")
 
       } else {
         radio.parentNode.classList.remove("declaration-choice");
@@ -177,7 +182,7 @@ const contentDeclarationBtn = document.querySelector(
 );
 
 // 상단 신고하기 버튼 클릭 시
-if(post_member_id !== member_id){
+if (post_member_id !== member_id) {
   contentDeclarationBtn.addEventListener("click", () => {
     declarationModalWrap.classList.add("open");
   });
@@ -209,12 +214,11 @@ cancelDeclarationBtn.addEventListener("click", () => {
 reportDeclarationBtn.addEventListener("click", (e) => {
   let reportContent = ''
   declarationItems.forEach((item) => {
-    if(item.classList[1] === "report-choice"){
-      // console.log(item.innerText)
+    if (item.classList[1] === "report-choice") {
       reportContent = item.innerText
 
-      }
-    })
+    }
+  })
   reportInput.value = reportContent
   declarationModalWrap.classList.remove("open");
 });

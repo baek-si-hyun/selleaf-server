@@ -1,5 +1,10 @@
+import os
 from datetime import timedelta, datetime
+from pathlib import Path
 
+import joblib
+import sklearn
+import numpy as np
 from django.db.models import F, Count, Sum, Q
 from django.db.models.functions import Round
 from django.shortcuts import render
@@ -9,8 +14,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from alarm.models import Alarm
-from knowhow.models import Knowhow, KnowhowFile, KnowhowScrap, KnowhowTag
+from knowhow.models import Knowhow, KnowhowFile, KnowhowScrap, KnowhowTag, KnowhowView
 from lecture.models import Lecture, LecturePlaceFile, LectureReview, LectureScrap, LecturePlant
+from member.models import Member
 from post.models import Post, PostScrap, PostTag, PostFile
 from trade.models import Trade, TradeFile, TradeScrap
 
@@ -175,23 +181,98 @@ class MainView(View):
 
         knowhow_file = KnowhowFile.objects.filter(knowhow_id=best_knowhow['id']).values('file_url').first()
         best_knowhow['knowhow_file_url'] = knowhow_file['file_url'] if knowhow_file else None
-        print(best_knowhow)
-        # 메인에 표시된 노하우 게시물
-        knowhows = Knowhow.objects.filter() \
-                       .annotate(member_profile=F('member__memberprofile__file_url'),
-                                 member_name=F('member__member_name')) \
-                       .values('member_profile', 'member_name', 'id', 'knowhow_title')[:10]
 
-        for knowhow in knowhows:
-            knowhow_file = KnowhowFile.objects.filter(knowhow_id=knowhow['id']).values('file_url').first()
-            knowhow['knowhow_file_url'] = knowhow_file['file_url'] if knowhow_file else None
-            if member is None:
-                knowhow['knowhow_scrap'] = False
-            else:
-                knowhow_scrap = KnowhowScrap.objects.filter(knowhow_id=knowhow['id'], member_id=member['id']).values(
-                    'status').first()
-                knowhow['knowhow_scrap'] = knowhow_scrap[
-                    'status'] if knowhow_scrap and 'status' in knowhow_scrap else False
+        # knowhow ai
+        member_object = None
+        if member:
+            member_object = Member.objects.get(id=member.get('id'))
+
+        if member_object and KnowhowView.objects.filter(member_id=member_object.id).count() >= 3:
+            knowhow_model = joblib.load(os.path.join(Path(__file__).resolve().parent, f'ai/knowhow_ai{member_object.id}.pkl'))
+
+            knowhow_id = KnowhowView.objects.filter(member_id=member_object.id).order_by('-id')[:3].values('knowhow_id')
+
+            knowhows = [0] * len(knowhow_id)
+            probas = [0] * len(knowhow_id)
+            for i in range(len(knowhow_id)):
+                knowhows[i] = Knowhow.objects.filter(id=knowhow_id[i].get('knowhow_id')).values('knowhow_title', 'knowhow_content')
+                knowhows[i] = (knowhows[i][0]['knowhow_title']) + (knowhows[i][0]['knowhow_content'])
+                probas[i] = knowhow_model.predict_proba([knowhows[i]])
+
+            total_proba = [0] * len(probas[0][0])
+            for i in range(len(total_proba)):
+                total_proba[i] = (probas[0][0][i] + probas[1][0][i] + probas[2][0][i])
+
+            print('total_proba', total_proba)
+            if total_proba[0] == 3:
+                total_proba = [2.7, 0.1, 0.1, 0.1]
+
+
+            categories = ['꽃', '농촌', '원예', '정원']
+            knowhows = []
+            np_total_proba = np.array(total_proba)
+            argsorted_indices = np_total_proba.argsort()[::-1]
+
+            amounts = [5, 3, 2, 0]
+
+            for i in range(4):
+                category_name = categories[argsorted_indices[i]]
+                category_amount = amounts[i]
+                knowhows += list(Knowhow.objects.filter(knowhowcategory__category_name=category_name).order_by('-id')[:category_amount]\
+                               .annotate(member_profile=F('member__memberprofile__file_url'),
+                                         member_name=F('member__member_name')) \
+                               .values('member_profile', 'member_name', 'id', 'knowhow_title'))
+
+            for knowhow in knowhows:
+                knowhow_file = KnowhowFile.objects.filter(knowhow_id=knowhow['id']).values('file_url').first()
+                knowhow['knowhow_file_url'] = knowhow_file['file_url'] if knowhow_file else None
+                if member is None:
+                    knowhow['knowhow_scrap'] = False
+                else:
+                    knowhow_scrap = KnowhowScrap.objects.filter(knowhow_id=knowhow['id'], member_id=member['id']).values(
+                        'status').first()
+                    knowhow['knowhow_scrap'] = knowhow_scrap[
+                        'status'] if knowhow_scrap and 'status' in knowhow_scrap else False
+
+        elif member_object and KnowhowView.objects.filter(member_id=member_object.id).count() < 3:
+            # 메인에 표시된 노하우 게시물
+            knowhows = Knowhow.objects.filter() \
+                           .annotate(member_profile=F('member__memberprofile__file_url'),
+                                     member_name=F('member__member_name')) \
+                           .values('member_profile', 'member_name', 'id', 'knowhow_title')[:10]
+
+            # print(knowhows)
+            for knowhow in knowhows:
+                knowhow_file = KnowhowFile.objects.filter(knowhow_id=knowhow['id']).values('file_url').first()
+                knowhow['knowhow_file_url'] = knowhow_file['file_url'] if knowhow_file else None
+                if member is None:
+                    knowhow['knowhow_scrap'] = False
+                else:
+                    knowhow_scrap = KnowhowScrap.objects.filter(knowhow_id=knowhow['id'],
+                                                                member_id=member['id']).values(
+                        'status').first()
+                    knowhow['knowhow_scrap'] = knowhow_scrap[
+                        'status'] if knowhow_scrap and 'status' in knowhow_scrap else False
+
+
+        else:
+            # 메인에 표시된 노하우 게시물
+            knowhows = Knowhow.objects.filter() \
+                           .annotate(member_profile=F('member__memberprofile__file_url'),
+                                     member_name=F('member__member_name')) \
+                           .values('member_profile', 'member_name', 'id', 'knowhow_title')[:10]
+
+            # print(knowhows)
+            for knowhow in knowhows:
+                knowhow_file = KnowhowFile.objects.filter(knowhow_id=knowhow['id']).values('file_url').first()
+                knowhow['knowhow_file_url'] = knowhow_file['file_url'] if knowhow_file else None
+                if member is None:
+                    knowhow['knowhow_scrap'] = False
+                else:
+                    knowhow_scrap = KnowhowScrap.objects.filter(knowhow_id=knowhow['id'], member_id=member['id']).values(
+                        'status').first()
+                    knowhow['knowhow_scrap'] = knowhow_scrap[
+                        'status'] if knowhow_scrap and 'status' in knowhow_scrap else False
 
         # 데이터가 너무 적어 기획 변경
         # start_of_day = datetime(today.year, today.month, today.day, 0, 0, 0)
@@ -258,6 +339,7 @@ class MainView(View):
             'trades': trades,
             'lectureReviews': lecture_reviews,
             'posts': posts,
+            'member': member
         }
         return render(request, 'main/main.html', context)
 
@@ -296,7 +378,6 @@ class BestLectureCategoryAPI(APIView):
                 best_lecture['member_id'] = member['id']
             if best_lecture['lecture_rating'] is None:
                 best_lecture['lecture_rating'] = 0
-            print(best_lecture)
         return Response(best_lectures)
 
 
@@ -304,7 +385,6 @@ class KnowhowScrapAPI(APIView):
     def patch(self, request):
         data = request.data
         member = request.session.get('member')
-        print(data)
         if member:
             data = {
                 'knowhow_id': data['knowhow_id'],

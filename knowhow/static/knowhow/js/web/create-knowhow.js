@@ -31,18 +31,31 @@ dropBoxRequired.addEventListener("click", () => {
   dropBoxes[1].classList.toggle("required-open");
 });
 
+// 제목 입력란 키 업 이벤트
 titleInput.addEventListener("keyup", (e) => {
+  // 키 눌릴 때마다 제목 글자 수 세서 화면에 적용
   titleInputCount.innerText = 0;
   e.target.value && (titleInputCount.innerText = e.target.value.length);
+
+  // 키 눌릴 때마다 제목 글자 수 세서 한 글자라도 있으면 AI 추천 버튼 활성화
+  if (titleInput.value) {
+    recommendButton.classList.remove('disabled');
+  }
+  // 없으면 AI 추천 버튼 비활성화
+  else {
+    if (!recommendButton.classList.contains('disabled')) {
+      recommendButton.classList.add('disabled');
+    }
+  }
 });
 
-textInputContainer.addEventListener("click", () => {
-  contentTextArea.focus();
-});
+// textInputContainer.addEventListener("click", () => {
+//   contentTextArea.focus();
+// });
 
-contentTextArea.addEventListener("click", () => {
-  markIconWrap.classList.add("wrap-open");
-});
+// contentTextArea.addEventListener("click", () => {
+//   markIconWrap.classList.add("wrap-open");
+// });
 const prevImgBox = document.querySelector(".prev-img-box");
 const inputs = document.querySelectorAll("input[type=file]");
 
@@ -324,6 +337,8 @@ checkboxes.forEach((checkbox) => {
   });
 });
 
+// 내용 입력란 키 업 이벤트
 contentTextArea.addEventListener("keyup", () => {
-  contentCount.innerText = contentTextArea.value.length
+  // 키 누를 때마다 클자 수 세기
+  contentCount.innerText = contentTextArea.value.length;
 })

@@ -10,8 +10,65 @@
   <div class="notice-container">
     <div class="notice-inner">
       <div class="help-wrap">
-          {# 기존에 있던 문의 사항 및 고객센터 부분 주석 처리 #}
-        <div class="benner-wrap" style="z-index: 10">
+        {# 문의 사항 및 고객센터 #}
+        <div class="help-container">
+          <div class="help-inner">
+            <h2 class="help-text">무엇을 도와드릴까요?</h2>
+            <ul>
+              <li class="help-example">
+                <a href="#">
+                  <span class="help-q">Q</span>
+                  배송은 얼마나 걸리나요?
+                </a>
+              </li>
+              <li class="help-example">
+                <a href="#">
+                  <span class="help-q">Q</span>
+                  주문 취소는 어떻게 하나요?
+                </a>
+              </li>
+              <li class="help-example">
+                <a href="#">
+                  <span class="help-q">Q</span>
+                  제품의 자세한 정보를 알고싶어요.
+                </a>
+              </li>
+              <li class="help-example">
+                <a href="#">
+                  <span class="help-q">Q</span>
+                  제품이 불량일 때는?
+                </a>
+              </li>
+              <li class="help-example">
+                <a href="#">
+                  <span class="help-q">Q</span>
+                  카카오 계정으로 로그인하면 이미 가입되었다고 합니다.
+                </a>
+              </li>
+            </ul>
+          </div>
+          <hr class="help-between-center" />
+          <div class="center">
+            <h2 class="center-time">
+              고객센터
+              <span class="time">09:00 ~ 18:00</span>
+            </h2>
+            <div class="center-days">평일: 전체 문의 상담</div>
+            <div class="center-days">토요일, 공휴일: selleaf 상담</div>
+            <div class="center-days">일요일: 휴무</div>
+            <div class="center-number"></div>
+            <div class="center-contact">
+              <button class="kakao">
+                <a href="https://open.kakao.com/o/gBQBLk0f" target="_blank"
+                  >1:1 카톡 상담하기</a
+                >
+              </button>
+            </div>
+          </div>
+        </div>
+        <hr class="halfline" />
+        {# 공지사항 및 QnA 선택 버튼 #}
+        <div class="benner-wrap" >
           <nav
             class="benner-container"
             style="position: relative; z-index: 10"
@@ -36,92 +93,7 @@
         </div>
         <div id="question_list_section" class="list-wrap">
           <ul class="list-container">
-{#              기존의 리스트 예시들은 주석처리 #}
-{#            <li class="list-inner-box">#}
-{#              <h3 class="list-inner">#}
-{#                <button class="list-q">#}
-{#                  <span class="question-q">Q</span>#}
-{#                  <span class="question-text"#}
-{#                    >주문 내역은 어떻게 확인할 수 있나요?</span#}
-{#                  >#}
-{#                  <span class="question-v"></span>#}
-{#                </button>#}
-{#              </h3>#}
-{#              <div class="question">#}
-{#                <p>#}
-{#                  우측 상단 프로필 사진을 클릭 후 [나의쇼핑]을 통해 확인#}
-{#                  가능합니다#}
-{#                </p>#}
-{#              </div>#}
-{#            </li>#}
-{#            <li class="list-inner-box">#}
-{#              <h3 class="list-inner">#}
-{#                <button class="list-q">#}
-{#                  <span class="question-q">Q</span>#}
-{#                  <span class="question-text"#}
-{#                    >주문 내역은 어떻게 확인할 수 있나요?</span#}
-{#                  >#}
-{#                  <span class="question-v"></span>#}
-{#                </button>#}
-{#              </h3>#}
-{#              <div class="question">#}
-{#                <p>#}
-{#                  우측 상단 프로필 사진을 클릭 후 [나의쇼핑]을 통해 확인#}
-{#                  가능합니다#}
-{#                </p>#}
-{#              </div>#}
-{#            </li>#}
-{#            <li class="list-inner-box">#}
-{#              <h3 class="list-inner">#}
-{#                <button class="list-q">#}
-{#                  <span class="question-q">Q</span>#}
-{#                  <span class="question-text"#}
-{#                    >주문 내역은 어떻게 확인할 수 있나요?</span#}
-{#                  >#}
-{#                  <span class="question-v"></span>#}
-{#                </button>#}
-{#              </h3>#}
-{#              <div class="question">#}
-{#                <p>#}
-{#                  우측 상단 프로필 사진을 클릭 후 [나의쇼핑]을 통해 확인#}
-{#                  가능합니다#}
-{#                </p>#}
-{#              </div>#}
-{#            </li>#}
-{#            <li class="list-inner-box">#}
-{#              <h3 class="list-inner">#}
-{#                <button class="list-q">#}
-{#                  <span class="question-q">Q</span>#}
-{#                  <span class="question-text"#}
-{#                    >주문 내역은 어떻게 확인할 수 있나요?</span#}
-{#                  >#}
-{#                  <span class="question-v"></span>#}
-{#                </button>#}
-{#              </h3>#}
-{#              <div class="question">#}
-{#                <p>#}
-{#                  우측 상단 프로필 사진을 클릭 후 [나의쇼핑]을 통해 확인#}
-{#                  가능합니다#}
-{#                </p>#}
-{#              </div>#}
-{#            </li>#}
-{#            <li class="list-inner-box">#}
-{#              <h3 class="list-inner">#}
-{#                <button class="list-q">#}
-{#                  <span class="question-q">Q</span>#}
-{#                  <span class="question-text"#}
-{#                    >주문 내역은 어떻게 확인할 수 있나요?</span#}
-{#                  >#}
-{#                  <span class="question-v"></span>#}
-{#                </button>#}
-{#              </h3>#}
-{#              <div class="question">#}
-{#                <p>#}
-{#                  우측 상단 프로필 사진을 클릭 후 [나의쇼핑]을 통해 확인#}
-{#                  가능합니다#}
-{#                </p>#}
-{#              </div>#}
-{#            </li>#}
+              {# 공지사항 및 QnA 리스트 예시 #}
 {#            <li class="list-inner-box">#}
 {#              <h3 class="list-inner">#}
 {#                <button class="list-q">#}

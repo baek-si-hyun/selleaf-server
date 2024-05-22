@@ -8,6 +8,7 @@ const replyService = (() => {
             },
             body: JSON.stringify(reply)
         });
+        return response.json()
     }
 
     const getList = async (post_id, page, callback) => {
@@ -27,7 +28,7 @@ const replyService = (() => {
     }
 
     const update = async (reply) => {
-        await fetch(`/post/replies/${reply.replyId}/`, {
+        const response = await fetch(`/post/replies/${reply.replyId}/`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
@@ -35,6 +36,7 @@ const replyService = (() => {
             },
             body: JSON.stringify({'reply_content': reply.replyContent})
         });
+        return response.json()
     }
 
     const like = async (post_id, reply_id, member_id, like_status, callback) => {
@@ -99,7 +101,32 @@ const postService = (() => {
         return scrapCounting;
     }
 
-    return {getList: getList, getScrap: getScrap, getLike: getLike, likeCount: likeCount, scrapCount: scrapCount}
+    const aiPost = async (postTitle, postContent) => {
+        const loading = document.querySelector('.loading')
+        const info = document.querySelector('.tag-input2')
+        loading.style.display = 'block'
+        info.style.display = 'none'
+        const response = await fetch('/ai/api/post-detail/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'X-CSRFToken': csrf_token
+            },
+            body: JSON.stringify({ title: postTitle, content: postContent })
+        });
+        loading.style.display = 'none'
+        info.style.display = 'inline-block'
+        return await response.json();
+    };
+
+    return {
+        getList: getList,
+        getScrap: getScrap,
+        getLike: getLike,
+        likeCount: likeCount,
+        scrapCount: scrapCount,
+        aiPost : aiPost,
+    }
 })();
 
 

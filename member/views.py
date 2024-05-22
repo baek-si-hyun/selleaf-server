@@ -1,5 +1,8 @@
+import os
 from operator import itemgetter
+from pathlib import Path
 
+import joblib
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 # noinspection PyInterpreter
@@ -50,7 +53,8 @@ class MemberJoinView(View):
             'member_name': post_data.get('member-name'),
             'member_type': post_data.get('member-type'),
             'marketing_agree': marketing_agree,
-            'sms_agree': sms_agree
+            'sms_agree': sms_agree,
+            # 'member_knowhow_ai_model': 'base'
         }
         # member_data로 사용자의 정보 찾기
         # filter에 kwargs로 dict를 전달한다.
@@ -60,6 +64,31 @@ class MemberJoinView(View):
         # exists는 데이터의 존재여부를 반환한다.
         if not is_member.exists():
             member = Member.objects.create(**member_data)
+
+            # 각 회원별 ai model 생성
+            # 사전훈련된 pkl파일 불러오기
+            # 용량의 문제로 잘 나오는것만 확인하고 주석처리
+            # knowhow_ai_models = {}
+            # knowhow_ai_models[f'knowhow_ai{member.id}'] = joblib.load(os.path.join(Path(__file__).resolve().parent, '../main/ai/knowhow_ai.pkl'))
+            #
+            # joblib.dump(knowhow_ai_models[f'knowhow_ai{member.id}'], f'../main/ai/knowhow_ai{member.id}.pkl')
+            #
+            # # 저장할 파일의 경로를 지정
+            # file_path = os.path.join(Path(__file__).resolve().parent, f'../main/ai/knowhow_ai{member.id}.pkl')
+            # directory = os.path.dirname(file_path)
+            #
+            # # 디렉토리가 존재하지 않으면 생성
+            # if not os.path.exists(directory):
+            #     os.makedirs(directory)
+            #
+            # # 모델을 지정된 경로에 저장
+            # joblib.dump(knowhow_ai_models[f'knowhow_ai{member.id}'], file_path)
+            #
+            # # member 테이블의 member_knowhow_ad_model 컬럼에 경로 저장
+            # member_model = Member.objects.get(id=member.id)
+            # member_model.member_knowhow_ai_model = f'main/ai/knowhow_ai{member.id}.pkl'
+            # member_model.save(update_fields=['member_knowhow_ai_model'])
+
             # 사용자의 프로필 파일과 주소는 다른 테이블에서 관리 하기 때문에
             # 별도로 저장
             profile_data = {
@@ -150,12 +179,12 @@ class MypageShowView(View):
 
         lecture_review = LectureReview.objects.filter(member_id=member['id'])
 
-        post_like = list(PostLike.objects.filter(member_id=member['id']))
-        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
+        post_like = list(PostLike.objects.filter(member_id=member['id'], status=1))
+        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'], status=1)
         like_count = len(post_like) + len(knowhowlike)
 
-        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
-        trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
+        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'], status=1)
+        trade_scrap = TradeScrap.objects.filter(member_id=member['id'], status=1)
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
         mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage','mileage_status')
@@ -197,12 +226,12 @@ class MypagePostView(View):
         knowhow = list(Knowhow.objects.filter(member_id=member['id']))
         post_count = len(post) + len(knowhow)
         print(knowhow)
-        post_like = list(PostLike.objects.filter(member_id=member['id']))
-        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
+        post_like = list(PostLike.objects.filter(member_id=member['id'], status=1))
+        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'], status=1)
         like_count = len(post_like) + len(knowhowlike)
 
-        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
-        trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
+        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'], status=1)
+        trade_scrap = TradeScrap.objects.filter(member_id=member['id'], status=1)
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
         mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage', 'mileage_status')
@@ -240,12 +269,12 @@ class MypageReplyView(View):
         knowhow_reply = list(KnowhowReply.objects.filter(member_id=member['id']))
         reply_count = len(post_reply)+len(knowhow_reply)
 
-        post_like = list(PostLike.objects.filter(member_id=member['id']))
-        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
+        post_like = list(PostLike.objects.filter(member_id=member['id'], status=1))
+        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'], status=1)
         like_count = len(post_like) + len(knowhowlike)
 
-        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
-        trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
+        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'], status=1)
+        trade_scrap = TradeScrap.objects.filter(member_id=member['id'], status=1)
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
         mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage','mileage_status')
@@ -281,14 +310,14 @@ class MypageReviewView(View):
         knowhow = list(Knowhow.objects.filter(member_id=member['id']))
         post_count = len(post) + len(knowhow)
 
-        post_like = list(PostLike.objects.filter(member_id=member['id']))
-        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
+        post_like = list(PostLike.objects.filter(member_id=member['id'], status=1))
+        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'], status=1)
         like_count = len(post_like) + len(knowhowlike)
 
         lecture_reply = LectureReview.objects.filter(member_id=member['id'])
 
-        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
-        trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
+        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'], status=1)
+        trade_scrap = TradeScrap.objects.filter(member_id=member['id'], status=1)
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
         mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage','mileage_status')
@@ -331,12 +360,12 @@ class MypageLikesView(View):
         knowhow_reply = list(KnowhowReply.objects.filter(member_id=member['id']))
         reply_count = len(post_reply) + len(knowhow_reply)
 
-        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
-        trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
+        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'], status=1)
+        trade_scrap = TradeScrap.objects.filter(member_id=member['id'], status=1)
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
-        post_like = list(PostLike.objects.filter(member_id=member['id']))
-        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
+        post_like = list(PostLike.objects.filter(member_id=member['id'], status=1))
+        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'], status=1)
         like_count = len(post_like) + len(knowhowlike)
 
         mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage','mileage_status')
@@ -412,14 +441,14 @@ class MypageLecturesView(View):
 
         teacher = Teacher.objects.filter(member_id=member['id'])
 
-        post_like = list(PostLike.objects.filter(member_id=member['id']))
-        knowhow_like = KnowhowLike.objects.filter(member_id=member['id'])
+        post_like = list(PostLike.objects.filter(member_id=member['id'], status=1))
+        knowhow_like = KnowhowLike.objects.filter(member_id=member['id'], status=1)
         like_count = len(post_like) + len(knowhow_like)
 
         lecture = Apply.objects.filter(member_id = member['id'],apply_status= 0)
 
-        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
-        trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
+        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'], status=1)
+        trade_scrap = TradeScrap.objects.filter(member_id=member['id'], status=1)
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
         mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage','mileage_status')
@@ -499,12 +528,12 @@ class MypageTradesView(View):
 
         trade = Trade.objects.filter(member_id=member['id'])
 
-        post_like = list(PostLike.objects.filter(member_id=member['id']))
-        knowhow_like = KnowhowLike.objects.filter(member_id=member['id'])
+        post_like = list(PostLike.objects.filter(member_id=member['id'], status=1))
+        knowhow_like = KnowhowLike.objects.filter(member_id=member['id'], status=1)
         like_count = len(post_like) + len(knowhow_like)
 
-        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
-        trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
+        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'], status=1)
+        trade_scrap = TradeScrap.objects.filter(member_id=member['id'], status=1)
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
         mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage', 'mileage_status')
@@ -539,12 +568,12 @@ class MypageTeacherView(View):
 
         lecture = Apply.objects.filter(lecture__teacher_id=teacher.id, apply_status=1)
 
-        post_like = PostLike.objects.filter(member_id=member['id'])
-        knowhow_like = KnowhowLike.objects.filter(member_id=member['id'])
+        post_like = PostLike.objects.filter(member_id=member['id'], status=1)
+        knowhow_like = KnowhowLike.objects.filter(member_id=member['id'], status=1)
         like_count = len(post_like) + len(knowhow_like)
 
-        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
-        trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
+        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'], status=1)
+        trade_scrap = TradeScrap.objects.filter(member_id=member['id'], status=1)
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
         mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage', 'mileage_status')
@@ -577,12 +606,12 @@ class MypageTeacherPlanView(View):
         teacher = Teacher.objects.filter(member_id=member['id']).first()
         lecture = Apply.objects.filter(lecture__teacher_id=teacher.id, apply_status = 0)
 
-        post_like = list(PostLike.objects.filter(member_id=member['id']))
-        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
+        post_like = list(PostLike.objects.filter(member_id=member['id'], status=1))
+        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'], status=1)
         like_count = len(post_like) + len(knowhowlike)
 
-        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
-        trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
+        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'], status=1)
+        trade_scrap = TradeScrap.objects.filter(member_id=member['id'], status=1)
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
         mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage', 'mileage_status')
@@ -826,6 +855,7 @@ class MypageShowReviewAPI(APIView):
 
             if review['lecture_status'] == True:
                 review['lecture_status'] = 'online'
+
             elif review['lecture_status']==False:
                 review['lecture_status'] = 'offline'
 
@@ -838,7 +868,7 @@ class MypageShowReviewAPI(APIView):
 # 포스트, 노하우 좋아요 리스트 합본
 # 12개 한페이지
 class MypageShowLikesAPI(APIView):
-    def get(self, request,page):
+    def get(self, request, page):
 
         row_count = 12
         offset = (page - 1) * row_count
@@ -925,7 +955,7 @@ class MypageShowLecturesAPI(APIView):
         offset = (page - 1) * row_count
         limit = row_count * page
 
-        applies = Apply.objects.filter(member_id=request.session['member']['id'], apply_status=0) \
+        applies = Apply.objects.filter(member_id=request.session['member']['id'], apply_status__in=[0, 1]) \
             .annotate(
             member_name=F('member__member_name'),
             lecture_title=F('lecture__lecture_title'),
@@ -1183,4 +1213,3 @@ class MypageTraineeAPI(APIView):
         apply['trainees'] = trainee_names
 
         return Response(apply)
-

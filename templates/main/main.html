@@ -49,19 +49,31 @@
             </section>
           </div>
         </div>
-        <!-- 이런 사진 찾고 있었나요?? -->
         <div class="realmain-plantRecommend-wrap">
           <div class="realmain-plantRecommend-latterwrap">
             <div class="realmain-plantRecommend-lattercontent">
               <div class="realmain-plantRecommend-mainlatter">
-                <strong class="realmain-plantRecommend-stronglatter"
-                >이런 노하우 찾고 있나요?💡</strong
-                >
+              
+                  {% if member %}
+                      <strong class="realmain-plantRecommend-stronglatter">
+                     Ai 추천 노하우💡
+                </strong>
               </div>
               <div class="realmain-plantRecommend-littlelatter">
-                  <span class="realmain-plantRecommend-spanlatter"
-                  >다양한 식물을 위한 최고의 가이드</span
-                  >
+                  <span class="realmain-plantRecommend-spanlatter">
+                      자주 보는 카테고리를 바탕으로 추천해드려요!
+                  </span>
+                    {% else %}
+                      <strong class="realmain-plantRecommend-stronglatter">
+                    이런 노하우 찾고 있나요?💡
+                </strong>
+              </div>
+              <div class="realmain-plantRecommend-littlelatter">
+                  <span class="realmain-plantRecommend-spanlatter">
+                      다양한 식물을 위한 최고의 가이드
+                  </span>
+                    {% endif %}
+                  
               </div>
             </div>
             <div class="realmain-seeMore-wrap">

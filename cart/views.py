@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 
 from apply.models import Apply
 from cart.models import Cart, CartDetail
-from lecture.models import Lecture
+from lecture.models import Lecture, LectureProductFile
 from member.models import MemberProfile
 
 
@@ -63,8 +63,8 @@ class CartListAPI(APIView):
             .values('id','quantity', 'lecture_title','date','kit','time','teacher_name','lecture_price','lecture_id')
 
             for detail in details:
-                detail_file = Lecture.objects.filter(id = detail['lecture_id']).values('lectureplacefile__file_url').first()
-                detail['lecture_file']= detail_file['lectureplacefile__file_url']
+                detail_file = LectureProductFile.objects.filter(lecture_id = detail['lecture_id']).values('file_url').first()
+                detail['lecture_file']= detail_file['file_url']
 
             if not items:  # items가 비어있는 경우 처리
                 continue

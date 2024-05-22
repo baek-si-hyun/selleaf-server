@@ -491,6 +491,7 @@
                 name="knowhow-title"
               />
               <div class="title-count"><span class="count">0</span> / 50</div>
+              <div class="content-recommendation">AI 내용 추천 받기</div>
             </div>
           </div>
         </div>
@@ -506,6 +507,9 @@
                   </div>
 
               </div>
+              <ul class="ai-recommended-list">
+                {# 리스트 내용 #}
+              </ul>
             </div>
           </div>
         </div>
@@ -517,4 +521,6 @@
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
     <script src="{% static 'knowhow/js/web/create-knowhow.js' %}"></script>
+    <script src="{% static 'knowhow/js/web/recommend-module.js' %}"></script>
+    <script src="{% static 'knowhow/js/web/knowhow-content-recommend.js' %}"></script>
 {% endblock %}

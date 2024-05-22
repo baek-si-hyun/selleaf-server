@@ -1,6 +1,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/pycharm,django
 # Edit at https://www.toptal.com/developers/gitignore?templates=pycharm,django
 .idea
+idea
+/.idea
 ### Django ###
 *.log
 *.pot
@@ -196,8 +198,7 @@ cython_debug/
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
-.venv
-.idea
+
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries

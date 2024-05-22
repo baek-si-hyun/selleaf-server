@@ -12,7 +12,7 @@ const likeCountSpan = document.getElementById("like-count")
 const scrapCountSpan = document.getElementById("scrap-count")
 
 replyService.getList(knowhow_id, page + 1).then((replies) => {
-    if (replies['replies'].length !== 0){
+    if (replies['replies'].length !== 0) {
         moreButton.style.display = "flex";
     }
 });
@@ -45,71 +45,83 @@ const showList = (replies) => {
         // console.log(reply.created_date)
         text += `
             <div class="comment-item-box">
-                      <div class="comment-item">
-                        <div class="comment-user-img-wrap">
-                          <figure class="comment-user-img-container">
-                            <img
-                              src="${reply.member__memberprofile__file_url}"
-                              height="0"
-                              class="comment-user-img"
-                            />
-                          </figure>
-                        </div>
-                        <div class="comment-content-box">
-                          <div class="comment-user-name-box">
-                            <div role="link" class="commment-user-name">
-                              ${reply.member_name}
-                            </div>
-                          </div>
-                          <div class="comment">
-                            ${reply.knowhow_reply_content}
-                          </div>
-                          
-                          <section class="reply-update-wrap" id="update-form${reply.id}">
-                            <textarea id="" cols="30" rows="1" placeholder="내 댓글">${reply.knowhow_reply_content}</textarea>
-                            <div class="button-wrap">
-                                <button class="update-done ${reply.id}">작성완료</button>
-                                <button class="cancel-btn ${reply.id}">취소</button>
-                            </div>
-                          </section>
-                        
-                          <div class="comment-data">
-                            <div class="time-before">${timeForToday(reply.created_date)}</div>
-                            
-                            `;
-                            
-                            if(reply.member_id === Number(member_Id)) {
-                                text += `
-                                    <div class="comment-declaration-btn-box">
-                                      <div class="comment-split">・</div>
-                                      <button type="button" class="update-btn ${reply.id}">
-                                        수정
-                                      </button>
-                                    </div>
-                                    <div class="comment-declaration-btn-box">
-                                      <div class="comment-split">・</div>
-                                      <button type="button" class="remove-btn ${reply.id}">
-                                        삭제
-                                      </button>
-                                    </div>
-                                `}else {
-                                text += `
-                                    <div class="comment-declaration-btn-box">
-                                                  <div class="comment-split">・</div>
-                                                  <button type="button" class="comment-declaration-btn">
-                                                    신고
-                                                  </button>
-                                                </div>
-                                `
-                            }
+              <div class="comment-item">
+                <div class="comment-user-img-wrap">
+                  <figure class="comment-user-img-container">
+                    `;
+        if (reply.member__memberprofile__file_url.includes('http://') || reply.member__memberprofile__file_url.includes('https://')) {
+            text += `   
+                   <img
+                      src="${reply.member__memberprofile__file_url}"
+                      height="0"
+                      class="comment-user-img"
+                    />`;
+        } else {
+            text += `   
+                   <img
+                      src="/upload/${reply.member__memberprofile__file_url}"
+                      height="0"
+                      class="comment-user-img"
+                    />`;
+        }
 
-                            text += `
-                                                
-                                               </div>
-                                              </div>
-                                            </div>
-                                           </div>
-                            `;
+        text += `
+                  </figure>
+                </div>
+                <div class="comment-content-box">
+                  <div class="comment-user-name-box">
+                    <div role="link" class="commment-user-name">
+                      ${reply.member_name}
+                    </div>
+                  </div>
+                  <div class="comment">
+                    ${reply.knowhow_reply_content}
+                  </div>
+                  
+                  <section class="reply-update-wrap" id="update-form${reply.id}">
+                    <textarea id="" cols="30" rows="1" placeholder="내 댓글">${reply.knowhow_reply_content}</textarea>
+                    <div class="button-wrap">
+                        <button class="update-done ${reply.id}">작성완료</button>
+                        <button class="cancel-btn ${reply.id}">취소</button>
+                    </div>
+                  </section>
+                
+                  <div class="comment-data">
+                    <div class="time-before">${timeForToday(reply.created_date)}</div>
+        `;
+
+        if (reply.member_id === Number(member_Id)) {
+            text += `
+                            <div class="comment-declaration-btn-box">
+                              <div class="comment-split">・</div>
+                              <button type="button" class="update-btn ${reply.id}">
+                                수정
+                              </button>
+                            </div>
+                            <div class="comment-declaration-btn-box">
+                              <div class="comment-split">・</div>
+                              <button type="button" class="remove-btn ${reply.id}">
+                                삭제
+                              </button>
+                            </div>
+           `
+        } else {
+            text += `
+                            <div class="comment-declaration-btn-box">
+                                          <div class="comment-split">・</div>
+                                          <button type="button" class="comment-declaration-btn">
+                                            신고
+                                          </button>
+                                        </div>
+                  `
+        }
+        text += `
+                                        
+                                       </div>
+                                      </div>
+                                    </div>
+                                   </div>
+                `;
     });
 
     return text;
@@ -121,10 +133,10 @@ moreButton.addEventListener("click", (e) => {
     });
 
     replyService.getList(knowhow_id, page + 1).then((replies) => {
-    if (replies['replies'].length === 0){
-        moreButton.style.display = "none";
-    }
-});
+        if (replies['replies'].length === 0) {
+            moreButton.style.display = "none";
+        }
+    });
 
 });
 
@@ -150,7 +162,7 @@ writeButton.addEventListener("click", async (e) => {
 
 
 
-    if (replies['replies'].length !== 0){
+    if (replies['replies'].length !== 0) {
         moreButton.style.display = "flex";
     }
 
@@ -185,7 +197,7 @@ replyService.getList(knowhow_id, page, countScrap).then((scrapCount) => {
 
 // ul 태그의 자식 태그까지 이벤트가 위임된다.
 replySection.addEventListener("click", async (e) => {
-    if(e.target.classList[0] === 'update-btn'){
+    if (e.target.classList[0] === 'update-btn') {
         const replyId = e.target.classList[1]
         const updateForm = document.getElementById(`update-form${replyId}`)
         const commentData = e.target.closest(".comment-data")
@@ -196,7 +208,7 @@ replySection.addEventListener("click", async (e) => {
 
         commentData.style.display = "none"
 
-    }else if(e.target.classList[0] === 'cancel-btn'){
+    } else if (e.target.classList[0] === 'cancel-btn') {
         const replyId = e.target.classList[1]
         const updateForm = document.getElementById(`update-form${replyId}`)
         const commentData = updateForm.nextElementSibling
@@ -206,19 +218,22 @@ replySection.addEventListener("click", async (e) => {
         commentData.style.display = "flex"
 
 
-    }else if(e.target.classList[0] === 'update-done'){
+    } else if (e.target.classList[0] === 'update-done') {
         const replyId = e.target.classList[1]
         const replyContent = document.querySelector(`#update-form${replyId} textarea`);
-        await replyService.update({replyId: replyId, replyContent: replyContent.value})
+        await replyService.update({
+            replyId: replyId,
+            replyContent: replyContent.value
+        })
         page = 1
         const text = await replyService.getList(knowhow_id, page, showList);
         replySection.innerHTML = text;
         const replies = await replyService.getList(knowhow_id, page + 1);
-        if (replies['replies'].length !== 0){
+        if (replies['replies'].length !== 0) {
             moreButton.style.display = "flex";
         }
 
-    }else if(e.target.classList[0] === 'remove-btn'){
+    } else if (e.target.classList[0] === 'remove-btn') {
         const replyId = e.target.classList[1];
         await replyService.remove(replyId);
         page = 1
@@ -226,7 +241,7 @@ replySection.addEventListener("click", async (e) => {
         replySection.innerHTML = text;
 
         const replies = await replyService.getList(knowhow_id, page + 1);
-        if (replies['replies'].length !== 0){
+        if (replies['replies'].length !== 0) {
             moreButton.style.display = "flex";
         }
     }
@@ -269,15 +284,3 @@ function timeForToday(datetime) {
 
     return `${gap}년 전`;
 }
-
-
-
-
-
-
-
-
-
-
-
-

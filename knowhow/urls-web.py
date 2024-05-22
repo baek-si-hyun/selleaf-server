@@ -2,7 +2,7 @@ from django.urls import path
 
 from knowhow.views import KnowhowCreateView, KnowhowDetailView, KnowhowReplyWriteApi, \
     KnowhowDetailApi, KnowhowReplyApi, KnowhowListApi, KnowhowListView, KnowhowUpdateView, \
-    KnowhowDeleteView, KnowhowScrapApi, KnowhowLikeApi, KnowhowReportView
+    KnowhowDeleteView, KnowhowScrapApi, KnowhowLikeApi, KnowhowReportView, KnowhowRecommendationAPI
 
 app_name = 'knowhow'
 
@@ -28,6 +28,9 @@ urlpatterns = [
     path('replies/write/', KnowhowReplyWriteApi.as_view(), name='reply_write'),
     path('replies/list/<int:knowhow_id>/<int:page>/', KnowhowDetailApi.as_view(), name='reply_list'),
     path('replies/<int:reply_id>/', KnowhowReplyApi.as_view()),
+
+    # 제목기반 내용 자동 추천
+    path('content-recommendation/<str:title>/', KnowhowRecommendationAPI.as_view())
 
     #좋아요 스크랩
     # path('like/scrap/<int:status>/', KnowhowLikeScrapApi.as_view(), name='like_scrap'),

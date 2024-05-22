@@ -29,8 +29,6 @@ lectureItems.forEach((item) => {
 let page = 1
 
 const showApplies = (applies) => {
-    applies.sort((a, b) => b.apply_status - a.apply_status);
-
     let text = ``
     applies.forEach((apply) => {
         const lecturePlantTags = apply.lecture_plant.map(plant => `

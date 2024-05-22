@@ -129,6 +129,19 @@
 .publish-btn:active {
   opacity: 0.7;
 }
+
+/* 발행신천 버튼 비활성화 되었을 때 스타일 변경 */
+.publish-btn:disabled {
+  background: rgb(130, 140, 148);
+  border: 1px solid rgb(130, 140, 148);
+  cursor: default;
+}
+
+.publish-btn:disabled:hover,
+.publish-btn:disabled:active {
+  opacity: 1;
+}
+
 .publish-btn-text {
   display: inline;
 }
@@ -479,6 +492,8 @@
 .title-input-box {
   position: relative;
   margin: 45px 0px 0px;
+  display: flex;
+  gap: 10px;
 }
 input.title-input {
   display: block;
@@ -512,16 +527,52 @@ input.title-input {
   right: 0px;
   top: 50%;
   color: rgb(130, 140, 148);
-  margin: -9px 0px 0px;
+  margin-right: 15%;
   font-size: 15px;
   line-height: 19px;
+  width: 75px;
 }
+
+/* AI 내용 추천 버튼 */
+.content-recommendation {
+  display: inline-block;
+  padding: 11px 16px;
+  background-color: rgba(33, 38, 41, 0.8);
+  color: rgb(255, 255, 255);
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 400;
+  border-radius: 4px;
+  transition: background-color 0.1s ease 0s;
+  height: 40px;
+  width: 155px;
+  align-self: flex-end;
+  margin-bottom: 5px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.content-recommendation:hover,
+.content-recommendation:active {
+  background-color: rgb(164, 172, 179);
+}
+
+/* AI 내용 추천 버튼 비활성화 시 스타일 변경 */
+.content-recommendation.disabled {
+  background-color: rgba(130, 140, 148, 0.8);
+  cursor: default;
+}
+
+.content-recommendation.disabled:hover,
+.content-recommendation.disabled:active {
+}
+
 .content-text-input-wrap {
   flex: 1 0 auto;
-  cursor: text;
+  /*cursor: text;*/
 }
 .content-text-input-container {
-  cursor: text;
+  /*cursor: text;*/
   padding: 40px 0px 30vh;
 }
 .content-text-input-inner {
@@ -810,4 +861,66 @@ input::placeholder {
 
 input[name='deleted'] {
     display: none;
+}
+
+/* AI 추천 내용 리스트 */
+ul.ai-recommended-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+li.recommended-contents-wrap {
+  height: 180px;
+  border: 1px solid rgb(222, 215, 215);
+  border-radius: 4px;
+  margin: 15px 0;
+  padding: 15px;
+  background-color: rgb(222, 215, 215);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+li.recommended-contents-wrap:hover {
+  opacity: 0.7;
+  background-color: rgba(143, 138, 138, 0.8);
+}
+
+li.recommended-contents-wrap:hover div.select-text-wrap {
+  color: #fff;
+}
+
+div.recommended-contents-container {
+  height: 135px;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: white;
+}
+
+div.recommended-content-num {
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+div.ai-recommended-content {
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 400;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+div.select-text-wrap {
+  text-align: center;
+  height: 30px;
+  color: rgb(222, 215, 215);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 45px;
 }

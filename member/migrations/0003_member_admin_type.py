@@ -15,4 +15,8 @@ class Migration(migrations.Migration):
             name='admin_type',
             field=models.BooleanField(default=False),
         ),
+        migrations.RemoveField(
+            model_name="member",
+            name="member_knowhow_ai_model",
+        ),
     ]

@@ -36,58 +36,58 @@ const showReviewList = (reviews) => {
     let lecturePlantTags = ""; // postPlantTags 변수를 미리 정의하고 초기화
 
       lecturePlantTags = review.lecture_plant.map(plant => `
-                  <li class="item-tags">
-                    <div>
-                      <button
-                        class="item-tags-button"
-                        type="button"
-                      >
-                        ${plant}
-                      </button>
-                    </div>
-                  </li>`).join('');
+          <li class="item-tags">
+            <div>
+              <button
+                class="item-tags-button"
+                type="button"
+              >
+                ${plant}
+              </button>
+            </div>
+          </li>`).join('');
 
       text += `
          <div class="reviews-history-item-wrap">
-                  <a href="/lecture/detail/${review.lecture_status}/?id=${review.lecture_id}" class="reviews-history-link"></a>
-                  <div class="reviews-history-item-container">
-                    <div class="reviews-item-image-wrap" style="opacity: 1">
-                      <img alt=""
-                        class="reviews-item-image"
-                        src="/upload/${review.lecture_file}"
-                      />
-                    </div>
-                    <div class="reviews-item-title-wrap" style="opacity: 1">
-                      <span>${review.review_title}</span>
-                    </div>
-                    <div class="reviews-item-article-wrap" style="opacity: 1">
-                      <span>${review.review_content}</span>
-                    </div>
-                    <!-- 작성자, 조회수, 지역, 태그까지 모두 감싸는 부분 -->
-                    <div class="reviews-item-info-wrap">
-                      <div class="article-info-wrap">
-                        <!-- 작성자 -->
-                        <div class="user-info-wrap">
-                          ${review.lecture_title}
-                        </div>
-                        <!-- 올린 시간, 조회수, 지역 -->
-                        <div class="item-info-wrap">
-                          <div class="item-infos">${timeForToday(review.updated_date)}</div>
-                          <div class="item-infos">별점 ${review.review_rating}</div>
-                          <div class="item-infos">${review.lecture_category}</div>
-                        </div>
-                      </div>
-                      <!-- 태그 -->
-                      <div class="item-tags-wrap">
-                        <ul class="item-tags-container">
-                          ${lecturePlantTags} <!-- postPlantTags 변수를 여기서 사용 -->
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
+          <a href="/lecture/detail/${review.lecture_status}/?id=${review.lecture_id}" class="reviews-history-link"></a>
+          <div class="reviews-history-item-container">
+            <div class="reviews-item-image-wrap" style="opacity: 1">
+              <img alt=""
+                class="reviews-item-image"
+                src="/upload/${review.lecture_file}"
+              />
+            </div>
+            <div class="reviews-item-title-wrap" style="opacity: 1">
+              <span>${review.review_title}</span>
+            </div>
+            <div class="reviews-item-article-wrap" style="opacity: 1">
+              <span>${review.review_content}</span>
+            </div>
+            <!-- 작성자, 조회수, 지역, 태그까지 모두 감싸는 부분 -->
+            <div class="reviews-item-info-wrap">
+              <div class="article-info-wrap">
+                <!-- 작성자 -->
+                <div class="user-info-wrap">
+                  ${review.lecture_title}
                 </div>
-                <!-- 각 내역 사이의 구분선 -->
-                <hr class="items-seperator" />
+                <!-- 올린 시간, 조회수, 지역 -->
+                <div class="item-info-wrap">
+                  <div class="item-infos">${timeForToday(review.updated_date)}</div>
+                  <div class="item-infos">별점 ${review.review_rating}</div>
+                  <div class="item-infos">${review.lecture_category}</div>
+                </div>
+              </div>
+              <!-- 태그 -->
+              <div class="item-tags-wrap">
+                <ul class="item-tags-container">
+                  ${lecturePlantTags} <!-- postPlantTags 변수를 여기서 사용 -->
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 각 내역 사이의 구분선 -->
+        <hr class="items-seperator" />
       `;
 
   });

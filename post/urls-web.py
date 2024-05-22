@@ -3,7 +3,6 @@ from django.urls import path
 from post.views import PostCreateView, PostDetailView, PostReplyWriteApi, PostDetailApi, PostReplyApi, PostScrapApi, \
     PostLikeApi, PostUpdateView, PostDeleteView, PostLikeCountApi, PostScrapCountApi, PostReplyLikeApi, PostReportView, \
     PostReplyReportView, PostListView, PostListApi, ChannelView
-
 app_name = 'post'
 
 urlpatterns = [
@@ -30,9 +29,9 @@ urlpatterns = [
     path('scrap/count/<int:post_id>/', PostScrapCountApi.as_view()),
 
     path('list/', PostListView.as_view(), name='list'),
-    path('list/<int:page>/<str:filters>/<str:sorting>/<str:types>', PostListApi.as_view(), name='list'),
+    path('list/<int:page>/<str:filters>/<str:sorting>/<str:types>', PostListApi.as_view()),
 
     # 채널
-    path('channel/', ChannelView.as_view(), name='list'),
+    path('channel/', ChannelView.as_view(), name='channel'),
 
 ]

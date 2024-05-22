@@ -606,7 +606,7 @@ input.title-input {
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 20px;
-  padding-left: 130px;
+  padding-left: 25px;
 }
 .tag {
   box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 10px;
@@ -660,4 +660,73 @@ input::placeholder {
   font-size: 13px;
   line-height: 16px;
   color: #c2c2c2;
+}
+
+.tag-input2 {
+  display: inline-block;
+  width: 300%;
+  margin: 0;
+  padding: 8px 15px 9px;
+  /*border: 1px solid #dbdbdb;*/
+  background-color: #fff;
+  color: #000;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: Noto Sans KR, Noto Sans CJK KR, 맑은 고딕, Malgun Gothic,
+    sans-serif;
+  font-size: 12px;
+  line-height: 21px;
+  transition: border-color 0.1s, background-color 0.1s;
+  resize: none;
+  -webkit-appearance: none;
+}
+
+.required-info-inner2>.ai-checkbox{
+  margin-top: 13.5px;
+  margin-right: 10px;
+}
+
+.required-info-inner2 {
+  display: flex;
+  align-items: flex-start;
+  padding: 0 0 12px 0;
+}
+
+.required-info-item-title-box2{
+  flex: 0 0 auto;
+  width: 70px;
+  padding: 8px 0px;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 24px;
+  color: #a4acb3;
+  word-break: keep-all;
+}
+
+.selection{
+    cursor: pointer;
+    color: #fff;
+    padding: 8px;
+    border: 1px solid #C06888;
+    font-weight: 800;
+    border-radius: 5px;
+    background-color: lightgrey;
+    margin-right: 10px;
+    margin-top: 11.5px;
+}
+
+.loading{
+  width: 20px;
+  margin-top: 10px;
+}
+
+.required-info-item-wrap2 {
+  flex: 1 0 0px;
+}
+
+.required-info-item2 {
+  margin-left: 18px;
+  display: flex;
+  align-items: flex-start;
+  padding: 0 0 12px 0;
 }
