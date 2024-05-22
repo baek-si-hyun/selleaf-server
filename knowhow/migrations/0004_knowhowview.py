@@ -9,7 +9,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('knowhow', '0003_alter_knowhowscrap_status'),
-        ('member', '0004_memberaifile'),
     ]
 
     operations = [

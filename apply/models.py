@@ -24,9 +24,11 @@ class Apply(Period):
     time = models.CharField(null=False, blank=False, max_length=100)
     kit = models.CharField(null=False, blank=False, max_length=100, default='offline')
     quantity = models.IntegerField(null=False, blank=False, default=1)
+
     class Meta:
         db_table = 'tbl_apply'
         ordering = ['-id']
+
 
 class Trainee(Period):
     trainee_name = models.CharField(null=False, blank=False, max_length=100)
