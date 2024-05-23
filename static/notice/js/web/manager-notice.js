@@ -147,7 +147,7 @@ const createHTML = (() => {
                       </div>
                     </button>
                     <div class="content-open-wrap"></div>
-                    <a class="update-notice" href="/admin/notice/update/?id=${notice.id}">수정</a>
+                    <a class="update-notice" href="/managers-page/notice/update/?id=${notice.id}">수정</a>
                   </li>
                 `
             }

@@ -18,7 +18,7 @@ const qnaService = (() => {
 
     // QnA 여러 개 삭제(소프트 딜리트)
     const deleteQnAs = async (qnaIds) => {
-        await fetch(`/admin/qna/delete/${qnaIds}`, {
+        await fetch(`/managers-page/qna/delete/${qnaIds}`, {
             method: 'PATCH',
             headers: {'X-CSRFToken': csrf_token}
         });

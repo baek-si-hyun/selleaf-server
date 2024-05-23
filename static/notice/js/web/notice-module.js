@@ -18,7 +18,7 @@ const noticeService = (() => {
 
     // 공지사항 여러 개 삭제(소프트 딜리트)
     const deleteNotices = async (noticeIds) => {
-        await fetch(`/admin/notice/delete/${noticeIds}`, {
+        await fetch(`/managers-page/notice/delete/${noticeIds}`, {
             method: 'PATCH',
             headers: {'X-CSRFToken': csrf_token}
         });

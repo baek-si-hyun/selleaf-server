@@ -40,7 +40,7 @@ class ManagerLoginView(View):
     # 관리자 로그인 페이지 이동 뷰
     def get(self, request):
         # 로그인 한 상태에서 다시 로그인 페이지에 접근하려 했는지 검사
-        if request.session.get('admin') is not None:
+        if request.session.get('managers') is not None:
             # 만약 그렇다면 회원 정보 리스트 페이지로 redirect
             return redirect('manager-member')
 
@@ -53,7 +53,7 @@ class ManagerLoginView(View):
         data = request.POST
 
         # 관리자 로그인 정보도 'admin' 이라는 키로 세션에 저장
-        request.session['admin'] = data
+        request.session['managers'] = data
 
         # 이전에 요청한 관리자 페이지 내 경로가 있다면 변수에 담음
         previous_uri = request.session.get('previous_uri')
@@ -78,7 +78,7 @@ class ManagerLoginView(View):
 class ManagerLogoutView(View):
     def get(self, request):
         # 세션에서 관리자 데이터 삭제
-        del request.session['admin']
+        del request.session['managers']
 
         # 관리자 로그인 페이지로 이동
         return redirect('manager-login')

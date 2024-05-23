@@ -1,6 +1,6 @@
 const manageReply = (() => {
    const getReply = async (keyword, page, callback) => {
-       const response = await fetch(`/service-admin/replies/api/?keyword=${keyword}&page=${page}`)
+       const response = await fetch(`/managers-page/replies/api/?keyword=${keyword}&page=${page}`)
        const replies = await response.json()
 
        if(callback){
@@ -10,7 +10,7 @@ const manageReply = (() => {
    }
 
    const remove = async (replyList) => {
-       await fetch(`/service-admin/replies/api/`, {
+       await fetch(`/managers-page/replies/api/`, {
            method: 'DELETE',
            headers: {
                'Content-Type': 'application/json;charset=utf-8',

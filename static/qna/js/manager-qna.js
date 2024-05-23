@@ -147,7 +147,7 @@ const createHTML = (() => {
                       </div>
                     </button>
                     <div class="content-open-wrap"></div>
-                    <a class="update-qna" href="/admin/qna/update/?id=${qna.id}">수정</a>
+                    <a class="update-qna" href="/managers-page/qna/update/?id=${qna.id}">수정</a>
                   </li>
                 `
             }
