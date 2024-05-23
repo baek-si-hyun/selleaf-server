@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-xrbh@fs#!56dnm^+1ld6l5n5t7n)1d@6t(@r3a&2!_x1j8r*$r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '3.36.60.87', 'selleaf.site']
 
