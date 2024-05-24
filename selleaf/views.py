@@ -2599,7 +2599,31 @@ class PostReplyReportAdjustAPI(APIView):
         for report_id in report_ids:
             # 요소가 빈 문자열이 아닐 때만 테이블에서 해당 id를 가진 객체를 가져와서 삭제
             if report_id != '':
+                post_report_reply = PostReplyReport.object.filter(id=report_id).values().first()
+                report_reply_id = post_report_reply.get('post_reply_id')
+                post_reply = PostReply.objects.filter(id=report_reply_id).values().first()
+
+                new_sentence = [post_reply['post_reply_content']]
+                data = {
+                    'comment': new_sentence[0],
+                    'target': 1,
+                }
+                print(data)
+                # profanityDetectionModel(new_sentence)
+                # AiPostReply.objects.create(**data)
                 PostReplyReport.object.get(id=report_id).delete()
+                PostReply.objects.get(id=report_reply_id).delete()
+
+
+                # try:
+                #     with transaction.atomic():
+                #         with connection.cursor() as cursor:
+                #             cursor.execute('SET foreign_key_checks = 0;')
+                #             PostReply.objects.get(id=report_reply_id).delete()
+                #             PostReplyReport.objects.get(id=report_id).delete()
+                #             cursor.execute('SET foreign_key_checks = 1;')
+                # except Exception as e:
+                #     print(f"Error occurred: {e}")
 
         return Response('success')
 
