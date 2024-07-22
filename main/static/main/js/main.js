@@ -110,10 +110,8 @@ const recommendScrapButton = document.querySelectorAll(
 );
 
 const transSrcapBtnFn = (scrapBtn, responses) => {
-  console.log(responses)
   if (responses) {
     const img = scrapBtn.querySelector(".scrap-img");
-    console.log(img.getAttribute('src'))
     if (responses.status) {
       img.setAttribute("src", "/static/public/web/images/common/scrap-on.png");
       if (animationTarget) {
@@ -121,7 +119,6 @@ const transSrcapBtnFn = (scrapBtn, responses) => {
       }
       animationTarget = scrapPopup;
     } else {
-      console.log(111)
       img.setAttribute("src", "/static/public/web/images/common/scrap-off.png");
       if (animationTarget) {
         animationTarget.classList.remove("show-animation");

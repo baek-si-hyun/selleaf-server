@@ -1,11 +1,13 @@
-{% extends 'community/web/knowhow/../base.html' %} {% load static %} {% block
-  static %}
+{% extends 'community/web/knowhow/../base.html' %}
+{% load static %}
+{% block static %}
   <link
       rel="stylesheet"
       href="{% static 'knowhow/css/web/knowhow-detail.css' %}"
   />
-{% endblock %} {% block title %}노하우 상세보기{% endblock %} {% block content
-  %}
+{% endblock %}
+{% block title %}노하우 상세보기{% endblock %}
+{% block content %}
   <body>
   <div class="knowhow-detail-wrap">
     <div class="knowhow-detail-container">
@@ -108,37 +110,6 @@
                 {% endfor %}
               </div>
               <hr class="content-split-top"/>
-              {#
-              <div class="uploader-bottom-data-wrap">
-                #} {#
-                <button class="uploader-bottom-data-btn">
-                  #} {#
-                  <figure class="uploader-bottom-img-box">
-                    #} {#
-                    <img#}
-                        {#
-                        src=""
-                        #}
-                        {#
-                        height="0"
-                        #}
-                        {#
-                        class="uploader-bottom-img"
-                        #}
-                        {#
-                    />#} {#
-                  </figure>
-                  #} {#
-                  <div class="uploader-bottom-data-box">
-                    #} {# <span class="uploade-bottom-name">작성자</span>#} {#
-                  </div>
-                  #} {#</button
-                >
-                #} {#
-              </div>
-              #} {#
-              <hr class="content-split-bottom"/>
-              #}
               <div>
                 <div class="comment-section" id="comment-section">
                   <h1 class="comment-section-title">
@@ -147,30 +118,31 @@
                   <div class="comment-input-wrap">
                     <div class="comment-input-container">
                       <figure class="comment-user-icon-box">
-                        {# 프로필 사진#} {% if session_profile %} {% if
-                        'http://' not in session_profile.file_url or 'https://'
-                        not in session_profile.file_url %}
-                        <img
-                            src="/upload/{{ session_profile.file_url }}"
-                            class="comment-user-icon"
-                            loading="lazy"
-                            decoding="async"
-                        />
-                      {% else %}
-                        <img
-                            src="{{ session_profile.file_url }}"
-                            class="comment-user-icon"
-                            loading="lazy"
-                            decoding="async"
-                        />
-                      {% endif %} {% else %}
-                        <img
-                            src="/upload/file/2024/03/05/blank-image.avif"
-                            class="comment-user-icon"
-                            loading="lazy"
-                            decoding="async"
-                        />
-                      {% endif %}
+                        {# 프로필 사진#}
+                        {% if session_profile %}
+                          {% if 'http://' not in session_profile.file_url or 'https://' not in session_profile.file_url %}
+                            <img
+                                src="/upload/{{ session_profile.file_url }}"
+                                class="comment-user-icon"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                          {% else %}
+                            <img
+                                src="{{ session_profile.file_url }}"
+                                class="comment-user-icon"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                          {% endif %}
+                        {% else %}
+                          <img
+                              src="/upload/file/2024/03/05/blank-image.avif"
+                              class="comment-user-icon"
+                              loading="lazy"
+                              decoding="async"
+                          />
+                        {% endif %}
                       </figure>
                       <div class="input-wrap">
                         <div class="input-container">
@@ -280,7 +252,6 @@
                       <span class="sticky-data" id="scrap-count"></span>
                     </button>
                     <hr class="sticky-btn-split"/>
-
                     <button title="댓글" class="sticky-btn background-color">
                       <a href="#comment-section">
                         <span class="sticky-icon-box background-color">

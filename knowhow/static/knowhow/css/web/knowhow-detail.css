@@ -99,6 +99,7 @@
   width: 40px;
   flex-shrink: 0;
   margin: 0px;
+  overflow: hidden;
 }
 .uploader-img {
   width: 40px;
@@ -325,53 +326,6 @@
   height: 1px;
   border: none;
   background-color: rgb(234, 237, 239);
-}
-.uploader-bottom-data-wrap {
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  -webkit-box-pack: justify;
-  justify-content: space-between;
-  width: 100%;
-  margin: 40px 0px;
-  padding: 0px;
-}
-.uploader-bottom-data-btn {
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  padding: 0px;
-  border: 0px;
-  font-size: 0px;
-  text-align: left;
-  background: none;
-}
-.uploader-bottom-img-box {
-  display: inline-block;
-  background: url("/staticfiles/images/blank-image.png") 50% center / cover
-    no-repeat;
-  border-radius: 50%;
-  width: 40px;
-  flex-shrink: 0;
-  margin: 0px;
-}
-.uploader-bottom-img {
-  height: 0px;
-  display: block;
-  visibility: hidden;
-  padding-top: 100%;
-}
-.uploader-bottom-data-box {
-  margin-left: 8px;
-}
-.uploade-bottom-name {
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: 700;
-  color: rgb(47, 52, 56);
 }
 
 .comment-section {

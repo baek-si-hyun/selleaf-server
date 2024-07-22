@@ -5,11 +5,11 @@ const nav = document.querySelector(".sticky-category-nav");
 nav.addEventListener("click", (e) => {
   categoryAnkerItem.forEach((atag) => {
     atag.classList.contains("link-choice") &&
-      atag.classList.remove("link-choice");
+    atag.classList.remove("link-choice");
   });
   categoryTextItem.forEach((ptag) => {
     ptag.classList.contains("text-choice") &&
-      ptag.classList.remove("text-choice");
+    ptag.classList.remove("text-choice");
   });
 
   let itemWrap = e.target.closest(".nav-link");
