@@ -10,16 +10,14 @@ from teacher.models import Teacher, TeacherInfoFile
 class TeacherEntryView(View):
     def get(self, request):
         # 현재 로그인한 회원이 강사인지 아닌지 확인하기
-        member = request.session['member']
+        member = request.session.get('member')
         teacher_check = Teacher.objects.filter(member_id=member['id']).values('teacher_status').first()
 
         # 최근 생성된 강의 10개 가지고 오기
         lectures = Lecture.enabled_objects.all().values('lecture_title', 'id', 'teacher__member__member_name')[:10]
-        #
         for lecture in lectures:
             lecture_photo = LectureProductFile.objects.filter(lecture_id=lecture['id']).values('file_url').first()
-            lecture['lecture_photo'] = lecture_photo['file_url']
-
+            lecture['lecture_photo'] = lecture_photo['file_url'] if lecture_photo['file_url'] else '/static/public/web/images/common/blank-image.png'
         context = {
             'lectures': lectures,
             'teacher_check': teacher_check['teacher_status']
