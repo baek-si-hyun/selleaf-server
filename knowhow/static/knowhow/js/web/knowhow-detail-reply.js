@@ -61,7 +61,9 @@ const showList = (replies) => {
                    <img
                       src="/upload/${reply.member__memberprofile__file_url}"
                       height="0"
-                      class="comment-user-img"
+                      class="comment-user-img"              
+                      loading="lazy"
+                      decoding="async"
                     />`;
         }
 

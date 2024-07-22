@@ -208,13 +208,17 @@ const createBestLecture = (bestLectures) => {
             src="/upload/${bestLecture.lecture_file_url}"
             width="365.33px"
             height="365.33px"
+            loading="lazy"
+            decoding="async"
         />
         <button class="scrap-button" style="top:1px">
           <img
               src="${bestLecture.lecture_scrap ? '/static/public/web/images/common/scrap-on.png' : '/static/public/web/images/common/scrap-off.png'}"
               class="scrap-img"
               width="24px"
-              height="24px"
+              height="24px"             
+              loading="lazy"
+              decoding="async"  
           />
         </button>
         <div class="realmain-bestproduct-realphotosld"></div>

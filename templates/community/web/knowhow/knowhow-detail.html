@@ -1,10 +1,11 @@
-{% extends 'community/web/knowhow/../base.html' %}
-{% load static %}
-{% block static %}
-  <link rel="stylesheet" href="{% static 'knowhow/css/web/knowhow-detail.css' %}">
-{% endblock %}
-{% block title %}노하우 상세보기{% endblock %}
-{% block content %}
+{% extends 'community/web/knowhow/../base.html' %} {% load static %} {% block
+  static %}
+  <link
+      rel="stylesheet"
+      href="{% static 'knowhow/css/web/knowhow-detail.css' %}"
+  />
+{% endblock %} {% block title %}노하우 상세보기{% endblock %} {% block content
+  %}
   <body>
   <div class="knowhow-detail-wrap">
     <div class="knowhow-detail-container">
@@ -24,13 +25,17 @@
                             src="{{ member_profile.file_url }}"
                             height="0"
                             class="uploader-img"
+                            loading="lazy"
+                            decoding="async"
                         />
                       </figure>
                       <div class="uploader-name-box">
-                        <span class="uploader-name">{{ knowhow.member.member_name }}</span>
+                        <span class="uploader-name"
+                        >{{ knowhow.member.member_name }}</span
+                        >
                         <span class="uploader-sub-description">
-                            {{ knowhow.member.member_email }}
-                          </span>
+                          {{ knowhow.member.member_email }}
+                        </span>
                       </div>
                     </button>
                   </div>
@@ -40,18 +45,20 @@
                 <div class="content-wrap blind">
                   <p class="content-top-space"></p>
                   <span>
-                      <div class="content-img-wrap">
-                        <div class="content-img-container">
-                          <div class="content-img-inner">
-                            <img
-                                src="/upload/{{ knowhow_file.file_url }}"
-                                class="content-img"
-                                alt=""
-                            />
-                          </div>
+                    <div class="content-img-wrap">
+                      <div class="content-img-container">
+                        <div class="content-img-inner">
+                          <img
+                              src="/upload/{{ knowhow_file.file_url }}"
+                              class="content-img"
+                              alt=""
+                              loading="lazy"
+                              decoding="async"
+                          />
                         </div>
                       </div>
-                    </span>
+                    </div>
+                  </span>
                   <div class="prev-img-box">
                     {% for knowhow_file in knowhow_files %}
                       <div class="prev-img-item">
@@ -59,6 +66,8 @@
                             src="/upload/{{ knowhow_file.file_url }}"
                             alt=""
                             class="prev-img"
+                            loading="lazy"
+                            decoding="async"
                         />
                       </div>
                     {% endfor %}
@@ -87,7 +96,6 @@
                       </button>
                     </div>
                   {% endif %}
-
                 </div>
               </div>
               <hr class="content-split-top"/>
@@ -100,21 +108,37 @@
                 {% endfor %}
               </div>
               <hr class="content-split-top"/>
-              {#                <div class="uploader-bottom-data-wrap">#}
-              {#                  <button class="uploader-bottom-data-btn">#}
-              {#                    <figure class="uploader-bottom-img-box">#}
-              {#                      <img#}
-              {#                        src=""#}
-              {#                        height="0"#}
-              {#                        class="uploader-bottom-img"#}
-              {#                      />#}
-              {#                    </figure>#}
-              {#                    <div class="uploader-bottom-data-box">#}
-              {#                      <span class="uploade-bottom-name">작성자</span>#}
-              {#                    </div>#}
-              {#                  </button>#}
-              {#                </div>#}
-              {#                <hr class="content-split-bottom" />#}
+              {#
+              <div class="uploader-bottom-data-wrap">
+                #} {#
+                <button class="uploader-bottom-data-btn">
+                  #} {#
+                  <figure class="uploader-bottom-img-box">
+                    #} {#
+                    <img#}
+                        {#
+                        src=""
+                        #}
+                        {#
+                        height="0"
+                        #}
+                        {#
+                        class="uploader-bottom-img"
+                        #}
+                        {#
+                    />#} {#
+                  </figure>
+                  #} {#
+                  <div class="uploader-bottom-data-box">
+                    #} {# <span class="uploade-bottom-name">작성자</span>#} {#
+                  </div>
+                  #} {#</button
+                >
+                #} {#
+              </div>
+              #} {#
+              <hr class="content-split-bottom"/>
+              #}
               <div>
                 <div class="comment-section" id="comment-section">
                   <h1 class="comment-section-title">
@@ -123,25 +147,30 @@
                   <div class="comment-input-wrap">
                     <div class="comment-input-container">
                       <figure class="comment-user-icon-box">
-                        {# 프로필 사진#}
-                        {% if session_profile %}
-                          {% if 'http://' not in session_profile.file_url or 'https://' not in session_profile.file_url %}
-                            <img
-                                src="/upload/{{ session_profile.file_url }}"
-                                class="comment-user-icon"
-                            />
-                          {% else %}
-                            <img
-                                src="{{ session_profile.file_url }}"
-                                class="comment-user-icon"
-                            />
-                          {% endif %}
-                        {% else %}
-                          <img
-                              src="/upload/file/2024/03/05/blank-image.avif"
-                              class="comment-user-icon"
-                          />
-                        {% endif %}
+                        {# 프로필 사진#} {% if session_profile %} {% if
+                        'http://' not in session_profile.file_url or 'https://'
+                        not in session_profile.file_url %}
+                        <img
+                            src="/upload/{{ session_profile.file_url }}"
+                            class="comment-user-icon"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                      {% else %}
+                        <img
+                            src="{{ session_profile.file_url }}"
+                            class="comment-user-icon"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                      {% endif %} {% else %}
+                        <img
+                            src="/upload/file/2024/03/05/blank-image.avif"
+                            class="comment-user-icon"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                      {% endif %}
                       </figure>
                       <div class="input-wrap">
                         <div class="input-container">
@@ -158,7 +187,6 @@
                                   type="button"
                                   class="comment-submit-btn"
                                   disabled
-
                               >
                                 입력
                               </button>
@@ -168,8 +196,7 @@
                       </div>
                     </div>
                   </div>
-                  <section class="reply-section">
-                  </section>
+                  <section class="reply-section"></section>
                   <div class="pagination-box">
                     <button type="button" id="more-replies">
                       <div>더보기</div>
@@ -182,59 +209,73 @@
               <div
                   class="sticky-container"
                   style="
-                    position: sticky;
-                    top: 235px;
-                    transition: top 0.1s ease 0s;
-                  "
+                  position: sticky;
+                  top: 235px;
+                  transition: top 0.1s ease 0s;
+                "
               >
                 <div style="position: relative;">
                   <div class="sticky-inner">
                     <button title="좋아요" class="sticky-btn">
                       {% if knowhow_like %}
                         <span class="sticky-icon-box like-check-on" id="like-box">
-                          <img
-                              class="sticky-icon"
-                              src="{% static 'public/web/images/common/like-on.png' %}"
-                              alt=""
-                              id="like-icon"
-                          />
-                        </span>
+                        <img
+                            class="sticky-icon"
+                            src="{% static 'public/web/images/common/like-on.png' %}"
+                            alt=""
+                            id="like-icon"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                      </span>
                       {% else %}
-                        <span class="sticky-icon-box like-check-off" id="like-box">
-                          <img
-                              class="sticky-icon"
-                              src="{% static 'public/web/images/common/like-off.png' %}"
-                              alt=""
-                              id="like-icon"
-                          />
-                        </span>
+                        <span
+                            class="sticky-icon-box like-check-off"
+                            id="like-box"
+                        >
+                        <img
+                            class="sticky-icon"
+                            src="{% static 'public/web/images/common/like-off.png' %}"
+                            alt=""
+                            id="like-icon"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                      </span>
                       {% endif %}
 
                       <span class="sticky-data" id="like-count"></span>
                     </button>
 
                     <button title="저장" class="sticky-btn">
-
                       {% if knowhow_scrap %}
-                        <span class="sticky-icon-box scrap-check-on" id="scrap-box">
-                          <img
-                              class="sticky-icon"
-                              src="{% static 'public/web/images/common/scrap-on.png' %}"
-                              alt=""
-                              id="scrap-icon"
-                          />
-                        
-                        </span>
+                        <span
+                            class="sticky-icon-box scrap-check-on"
+                            id="scrap-box"
+                        >
+                        <img
+                            class="sticky-icon"
+                            src="{% static 'public/web/images/common/scrap-on.png' %}"
+                            alt=""
+                            id="scrap-icon"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                      </span>
                       {% else %}
-                        <span class="sticky-icon-box scrap-check-off" id="scrap-box">
-                          <img
-                              class="sticky-icon"
-                              src="{% static 'public/web/images/common/scrap-off.png' %}"
-                              alt=""
-                              id="scrap-icon"
-                          />
-                        
-                        </span>
+                        <span
+                            class="sticky-icon-box scrap-check-off"
+                            id="scrap-box"
+                        >
+                        <img
+                            class="sticky-icon"
+                            src="{% static 'public/web/images/common/scrap-off.png' %}"
+                            alt=""
+                            id="scrap-icon"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                      </span>
                       {% endif %}
                       <span class="sticky-data" id="scrap-count"></span>
                     </button>
@@ -242,36 +283,52 @@
 
                     <button title="댓글" class="sticky-btn background-color">
                       <a href="#comment-section">
-                          <span class="sticky-icon-box background-color">
-                            <span class="sticky-icon sticky-icon-comment">
-                            </span>
-                          </span>
+                        <span class="sticky-icon-box background-color">
+                          <span class="sticky-icon sticky-icon-comment"> </span>
+                        </span>
                       </a>
                       <span class="sticky-data" id="reply-count"></span>
                     </button>
                     {% if request.session.member.id == knowhow.member.id %}
                       <a href="/knowhow/update/?id={{ knowhow.id }}">
-                        <button type="button" title="공유" class="sticky-btn background-color">
-                            <span class="sticky-icon-box background-color">
-                              <span class="sticky-icon sticky-icon-share">
-                                  <img src="{% static '/public/web/images/common/rewrite.png' %}" alt="">
-                              </span>
-                            </span>
+                        <button
+                            type="button"
+                            title="공유"
+                            class="sticky-btn background-color"
+                        >
+                        <span class="sticky-icon-box background-color">
+                          <span class="sticky-icon sticky-icon-share">
+                            <img
+                                src="{% static '/public/web/images/common/rewrite.png' %}"
+                                alt=""
+                                loading="lazy"
+                                decoding="async"
+                            />
+                          </span>
+                        </span>
                           <span class="sticky-data" id="share">수정하기</span>
                         </button>
                       </a>
                       <a href="/knowhow/delete/?id={{ knowhow.id }}">
-                        <button type="button" title="공유" class="sticky-btn background-color">
-                            <span class="sticky-icon-box background-color">
-                              <span class="sticky-icon sticky-icon-share">
-                                  <img src="{% static '/public/web/images/common/remove-btn.png' %}" alt="">
-                              </span>
-                            </span>
+                        <button
+                            type="button"
+                            title="공유"
+                            class="sticky-btn background-color"
+                        >
+                        <span class="sticky-icon-box background-color">
+                          <span class="sticky-icon sticky-icon-share">
+                            <img
+                                src="{% static '/public/web/images/common/remove-btn.png' %}"
+                                alt=""
+                                loading="lazy"
+                                decoding="async"
+                            />
+                          </span>
+                        </span>
                           <span class="sticky-data" id="share">삭제하기</span>
                         </button>
                       </a>
                     {% endif %}
-
                   </div>
                 </div>
               </div>
@@ -282,7 +339,11 @@
     </div>
   </div>
 
-  <form action="/knowhow/report/?id={{ knowhow.id }}" method="post" name="report">
+  <form
+      action="/knowhow/report/?id={{ knowhow.id }}"
+      method="post"
+      name="report"
+  >
     {% csrf_token %}
     <div class="declaration-modal-wrap">
       <div class="declaration-modal-container">
@@ -405,27 +466,35 @@
             </li>
           </ul>
         </div>
-        <input type="hidden" class="report-content" name="report-content" value=""/>
+        <input
+            type="hidden"
+            class="report-content"
+            name="report-content"
+            value=""
+        />
         <div class="report-declaration-btn-wrap">
           <div class="report-declaration-btn-container">
-            <button type="submit" class="report-declaration-btn" id="report">신고하기</button>
+            <button type="submit" class="report-declaration-btn" id="report">
+              신고하기
+            </button>
           </div>
           <div class="cancel-declaration-btn-container">
-            <button type="button" class="cancel-declaration-btn" id="cancel">취소하기</button>
+            <button type="button" class="cancel-declaration-btn" id="cancel">
+              취소하기
+            </button>
           </div>
         </div>
       </div>
     </div>
   </form>
   </body>
-{% endblock %}
-{% block js %}
+{% endblock %} {% block js %}
   <script>
-    const csrf_token = '{{ csrf_token }}'
-    const knowhow_id = '{{ knowhow.id }}'
-    const member_Id = '{{ request.session.member.id }}'
-    const replyCount = '{{ reply_count }}'
-    const knowhow_member_id = '{{ knowhow.member.id }}'
+    const csrf_token = "{{ csrf_token }}";
+    const knowhow_id = "{{ knowhow.id }}";
+    const member_Id = "{{ request.session.member.id }}";
+    const replyCount = "{{ reply_count }}";
+    const knowhow_member_id = "{{ knowhow.member.id }}";
   </script>
 
   <script src="{% static 'knowhow/js/web/knowhow-detail.js' %}"></script>

@@ -17,6 +17,8 @@ function appendItem(post) {
           <img
             src="../../../staticfiles/images/blank-image.png"
             class="similar-post-img"
+            loading="lazy"
+            decoding="async"
         /></a>
       </div>
     </span>

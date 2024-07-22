@@ -22,7 +22,8 @@
                   <img
                       src="{{ member_profile.file_url }}"
                       height="0"
-                      class="uploader-img"
+                      class="uploader-img" loading="lazy"
+                      decoding="async"
                   />
                 </figure>
                 <div class="uploader-data-box">
@@ -50,7 +51,8 @@
                         <img
                             src="/upload/{{ post_file.file_url }}"
                             alt=""
-                            class="content-img"
+                            class="content-img" loading="lazy"
+                            decoding="async"
                         />
                       </div>
                     </div>
@@ -112,18 +114,21 @@
                           {% if 'http://' not in session_profile.file_url or 'https://' not in session_profile.file_url %}
                             <img
                                 src="/upload/{{ session_profile.file_url }}"
-                                class="comment-user-icon"
+                                class="comment-user-icon" loading="lazy"
+                                decoding="async"
                             />
                           {% else %}
                             <img
                                 src="{{ session_profile.file_url }}"
-                                class="comment-user-icon"
+                                class="comment-user-icon" loading="lazy"
+                                decoding="async"
                             />
                           {% endif %}
                         {% else %}
                           <img
                               src="/upload/file/2024/03/05/blank-image.avif"
-                              class="comment-user-icon"
+                              class="comment-user-icon" loading="lazy"
+                              decoding="async"
                           />
                         {% endif %}
                       </figure>
@@ -148,7 +153,8 @@
                             </div>
                           </div>
                         </div>
-                        <div style="color:red; display: none; margin-top: 7px" class="profanity-warning"><span>비속어가 포함되어 있습니다!</span></div>
+                        <div style="color:red; display: none; margin-top: 7px" class="profanity-warning"><span>비속어가 포함되어 있습니다!</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -375,7 +381,8 @@
                               class="sticky-icon"
                               src="{% static 'public/web/images/common/like-on.png' %}"
                               alt=""
-                              id="like-icon"
+                              id="like-icon" loading="lazy"
+                              decoding="async"
                           />
                         </span>
                       {% else %}
@@ -384,7 +391,8 @@
                               class="sticky-icon"
                               src="{% static 'public/web/images/common/like-off.png' %}"
                               alt=""
-                              id="like-icon"
+                              id="like-icon" loading="lazy"
+                              decoding="async"
                           />
                         </span>
                       {% endif %}
@@ -398,7 +406,8 @@
                               class="sticky-icon"
                               src="{% static 'public/web/images/common/scrap-on.png' %}"
                               alt=""
-                              id="scrap-icon"
+                              id="scrap-icon" loading="lazy"
+                              decoding="async"
                           />
                         
                         </span>
@@ -408,7 +417,8 @@
                               class="sticky-icon"
                               src="{% static 'public/web/images/common/scrap-off.png' %}"
                               alt=""
-                              id="scrap-icon"
+                              id="scrap-icon" loading="lazy"
+                              decoding="async"
                           />
                         
                         </span>
@@ -429,7 +439,8 @@
                         <button type="button" title="공유" class="sticky-btn background-color">
                             <span class="sticky-icon-box background-color">
                               <span class="sticky-icon sticky-icon-share">
-                                  <img src="{% static '/public/web/images/common/rewrite.png' %}" alt="">
+                                  <img src="{% static '/public/web/images/common/rewrite.png' %}" alt="" loading="lazy"
+                                       decoding="async">
                               
                               </span>
                             </span>
@@ -440,7 +451,9 @@
                         <button type="button" title="공유" class="sticky-btn background-color">
                             <span class="sticky-icon-box background-color">
                               <span class="sticky-icon sticky-icon-share">
-                                  <img src="{% static '/public/web/images/common/remove-btn.png' %}" alt="">
+                                  <img src="{% static '/public/web/images/common/remove-btn.png' %}" alt=""
+                                       loading="lazy"
+                                       decoding="async">
                               </span>
                             </span>
                           <span class="sticky-data" id="share">삭제하기</span>

@@ -22,6 +22,8 @@ function appendItem(post) {
           src="../../../staticfiles/images/blank-image.png"
           alt="content-img"
           class="content-img"
+          loading="lazy"
+          decoding="async"
         />
         <button
           type="button"
@@ -32,6 +34,8 @@ function appendItem(post) {
             ><img
               src="../../../staticfiles/images/scrap-off-pink.png"
               alt=""
+              loading="lazy"
+              decoding="async"
             />
           </span>
         </button>
@@ -63,6 +67,8 @@ function appendItem(post) {
             src="../../../staticfiles/images/blank-image.png"
             height="0"
             class="uploader-icon"
+            loading="lazy"
+            decoding="async"
           />
         </figure>
         <div class="uploader-name">

@@ -38,6 +38,8 @@ const showList = (replies) => {
                       src="${reply.member__memberprofile__file_url}"
                       height="0"
                       class="comment-user-img"
+                      loading="lazy"
+                      decoding="async"
                     />`;
     } else {
       text += `   
@@ -45,6 +47,8 @@ const showList = (replies) => {
                       src="/upload/${reply.member__memberprofile__file_url}"
                       height="0"
                       class="comment-user-img"
+                      loading="lazy"
+                      decoding="async"
                     />`;
     }
 
