@@ -76,15 +76,17 @@ class SearchView(View):
     def get(self, request):
         member = request.session.get('member')
         search_data = request.GET.get('query')
+
+        if not search_data:
+            return render(request, 'main/search.html', {'error': '검색어를 입력하세요'})
+
         # 검색시 검색 키워드를 세션에 저장해 최근 검색 기록으로 사용 할 수 있게 만든다.
-        try:
-            if 'search' not in request.session:
-                request.session['search'] = [search_data]
-            else:
-                request.session['search'].append(search_data)
-            request.session.save()
-        except KeyError:
-            return
+        if 'search' not in request.session:
+            request.session['search'] = [search_data]
+        else:
+            request.session['search'].append(search_data)
+        request.session.save()
+
 
         # 모든 컨텐츠에서 검색 키워드에 맞는 결과를 가져온다
         knowhow_condition = Q(knowhow_title__contains=search_data) | Q(knowhowtag__tag_name__contains=search_data)
@@ -98,9 +100,13 @@ class SearchView(View):
         for knowhow in knowhows:
             knowhow_file = KnowhowFile.objects.filter(knowhow_id=knowhow['id']).values('file_url').first()
             knowhow['knowhow_file_url'] = knowhow_file['file_url'] if knowhow_file else None
-            knowhow_scrap = KnowhowScrap.objects.filter(knowhow_id=knowhow['id'], member_id=member['id']).values(
-                'status').first()
-            knowhow['knowhow_scrap'] = knowhow_scrap['status'] if knowhow_scrap and 'status' in knowhow_scrap else False
+            if member:
+                knowhow_scrap = KnowhowScrap.objects.filter(knowhow_id=knowhow['id'], member_id=member['id']).values(
+                    'status').first()
+                knowhow['knowhow_scrap'] = knowhow_scrap[
+                    'status'] if knowhow_scrap and 'status' in knowhow_scrap else False
+            else:
+                knowhow['knowhow_scrap'] = False
 
         trade_condition = Q(trade_title__contains=search_data)
         trades_queryset = Trade.enabled_objects.filter(trade_condition)
@@ -111,10 +117,13 @@ class SearchView(View):
 
         for trade in trades:
             trade_file = TradeFile.objects.filter(trade_id=trade['id']).values('file_url').first()
-            trade['trade_file_url'] = trade_file['file_url']
-            trade_scrap = TradeScrap.objects.filter(trade_id=trade['id'], member_id=member['id']).values(
-                'status').first()
-            trade['trade_scrap'] = trade_scrap['status'] if trade_scrap and 'status' in trade_scrap else False
+            trade['trade_file_url'] = trade_file['file_url'] if trade_file else None
+            if member:
+                trade_scrap = TradeScrap.objects.filter(trade_id=trade['id'], member_id=member['id']).values(
+                    'status').first()
+                trade['trade_scrap'] = trade_scrap['status'] if trade_scrap and 'status' in trade_scrap else False
+            else:
+                trade['trade_scrap'] = False
 
         post_condition = Q(post_title__contains=search_data) | Q(posttag__tag_name__contains=search_data)
         posts_queryset = Post.objects.filter(post_condition)
@@ -127,9 +136,12 @@ class SearchView(View):
         for post in posts:
             post_file = PostFile.objects.filter(post_id=post['id']).values('file_url').first()
             post['post_file_url'] = post_file['file_url'] if post_file else None
-            post_scrap = PostScrap.objects.filter(post_id=post['id'], member_id=member['id']).values(
-                'status').first()
-            post['post_scrap'] = post_scrap['status'] if post_scrap and 'status' in post_scrap else False
+            if member:
+                post_scrap = PostScrap.objects.filter(post_id=post['id'], member_id=member['id']).values(
+                    'status').first()
+                post['post_scrap'] = post_scrap['status'] if post_scrap and 'status' in post_scrap else False
+            else:
+                post['post_scrap'] = False
 
         lecture_condition = Q(lecture_title__contains=search_data)
         lectures_queryset = Lecture.enabled_objects.filter(lecture_condition)
@@ -142,9 +154,13 @@ class SearchView(View):
         for lecture in lectures:
             lecture_file = LecturePlaceFile.objects.filter(lecture_id=lecture['id']).values('file_url').first()
             lecture['lecture_file_url'] = lecture_file['file_url'] if lecture_file else None
-            lecture_scrap = LectureScrap.objects.filter(lecture_id=lecture['id'], member_id=member['id']).values(
-                'status').first()
-            lecture['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
+            if member:
+                lecture_scrap = LectureScrap.objects.filter(lecture_id=lecture['id'], member_id=member['id']).values(
+                    'status').first()
+                lecture['lecture_scrap'] = lecture_scrap[
+                    'status'] if lecture_scrap and 'status' in lecture_scrap else False
+            else:
+                lecture['lecture_scrap'] = False
 
         count = {
             'knowhow_count': knowhow_count,
@@ -160,6 +176,7 @@ class SearchView(View):
             'trades': trades,
             'posts': posts
         }
+        print(type('wefwef'), type(context['knowhows']), type(context['lectures']), type(context['trades']), type(context['posts']))
         return render(request, 'main/search.html', context)
 
 
